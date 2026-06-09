@@ -1,7 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import { createRoot } from 'react-dom/client';
 import legacyMarkup from './legacy/body.html?raw';
 import utmScript from './legacy/utm.js?raw';
 import paymentFlagsScript from './legacy/payment-flags.js?raw';
+import TherapistCarousel from './TherapistCarousel';
 
 const externalScripts = [
   {
@@ -24,10 +26,7 @@ const inlineScripts = [
 ];
 
 function appendInlineScript(id, code) {
-  if (document.getElementById(id)) {
-    return;
-  }
-
+  if (document.getElementById(id)) return;
   const script = document.createElement('script');
   script.id = id;
   script.textContent = code;
@@ -35,29 +34,40 @@ function appendInlineScript(id, code) {
 }
 
 function appendExternalScript({ id, src, attributes }) {
-  if (document.getElementById(id)) {
-    return;
-  }
-
+  if (document.getElementById(id)) return;
   const script = document.createElement('script');
   script.id = id;
   script.src = src;
-
   Object.entries(attributes).forEach(([name, value]) => {
     script.setAttribute(name, value);
   });
-
   document.body.appendChild(script);
 }
 
 export default function App() {
-  useEffect(() => {
-    inlineScripts.forEach(({ id, code }) => {
-      appendInlineScript(id, code);
-    });
+  const wrapperRef = useRef(null);
 
+  useEffect(() => {
+    inlineScripts.forEach(({ id, code }) => appendInlineScript(id, code));
     externalScripts.forEach(appendExternalScript);
   }, []);
 
-  return <div dangerouslySetInnerHTML={{ __html: legacyMarkup }} />;
+  useEffect(() => {
+    if (!wrapperRef.current) return;
+    const firstSection = wrapperRef.current.querySelector('section');
+    if (!firstSection) return;
+
+    const mount = document.createElement('div');
+    mount.id = 'therapist-carousel-mount';
+    firstSection.insertAdjacentElement('afterend', mount);
+    const root = createRoot(mount);
+    root.render(<TherapistCarousel />);
+
+    return () => {
+      root.unmount();
+      mount.remove();
+    };
+  }, []);
+
+  return <div ref={wrapperRef} dangerouslySetInnerHTML={{ __html: legacyMarkup }} />;
 }
