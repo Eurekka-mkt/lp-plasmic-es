@@ -118,11 +118,11 @@ export default function TherapistCarousel() {
             <div
               style={{
                 ...styles.slider,
-                transform: `translateX(calc(-${safeIndex} * (100% / ${visible} + 0px)))`,
+                transform: `translateX(calc(-${safeIndex} * (${100 / visible}% + ${12 / visible}px)))`,
               }}
             >
               {therapists.map((t, i) => (
-                <div key={i} style={{ ...styles.card, flex: `0 0 calc(${100 / visible}% - 16px)` }}>
+                <div key={i} style={{ ...styles.card, flex: `0 0 calc(${100 / visible}% - ${(12 * (visible - 1)) / visible}px)` }}>
                   <div style={styles.photoWrap}>
                     <img
                       src={t.photo}
@@ -163,20 +163,22 @@ export default function TherapistCarousel() {
 const styles = {
   section: {
     background: '#3a1447',
-    padding: '64px 0',
+    padding: '48px 0',
     width: '100%',
     boxSizing: 'border-box',
     fontFamily: 'inherit',
+    display: 'block',
   },
   inner: {
     maxWidth: '1100px',
+    width: '100%',
     margin: '0 auto',
-    padding: '0 24px',
+    padding: '0 16px',
     boxSizing: 'border-box',
   },
   title: {
     color: '#FFCE3B',
-    fontSize: '2rem',
+    fontSize: 'clamp(1.25rem, 4vw, 2rem)',
     fontWeight: 700,
     textAlign: 'center',
     margin: '0 0 8px',
@@ -184,37 +186,40 @@ const styles = {
   },
   subtitle: {
     color: '#bfa7c5',
-    fontSize: '1rem',
+    fontSize: 'clamp(0.85rem, 2.5vw, 1rem)',
     textAlign: 'center',
-    margin: '0 0 40px',
+    margin: '0 0 32px',
   },
   carouselWrapper: {
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
+    width: '100%',
+    boxSizing: 'border-box',
   },
   track: {
     flex: 1,
     overflow: 'hidden',
+    minWidth: 0,
   },
   slider: {
     display: 'flex',
-    gap: '16px',
+    gap: '12px',
     transition: 'transform 0.45s cubic-bezier(0.4, 0, 0.2, 1)',
+    willChange: 'transform',
   },
   card: {
     background: '#4a1a5e',
-    borderRadius: '16px',
+    borderRadius: '14px',
     overflow: 'hidden',
     display: 'flex',
     flexDirection: 'column',
-    boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
+    boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
     flexShrink: 0,
-    marginLeft: '0px',
   },
   photoWrap: {
     width: '100%',
-    aspectRatio: '1 / 1',
+    aspectRatio: '3 / 4',
     overflow: 'hidden',
     background: '#5f236f',
   },
@@ -226,20 +231,20 @@ const styles = {
     display: 'block',
   },
   info: {
-    padding: '16px',
+    padding: '12px 14px 16px',
     display: 'flex',
     flexDirection: 'column',
-    gap: '6px',
+    gap: '4px',
   },
   name: {
     color: '#f8f8f8',
-    fontSize: '0.95rem',
+    fontSize: '0.875rem',
     fontWeight: 600,
     lineHeight: 1.3,
   },
   formation: {
     color: '#FFCE3B',
-    fontSize: '0.8rem',
+    fontSize: '0.75rem',
     fontWeight: 400,
     lineHeight: 1.4,
   },
@@ -247,8 +252,9 @@ const styles = {
     background: 'rgba(255,206,59,0.15)',
     border: '1px solid rgba(255,206,59,0.3)',
     borderRadius: '50%',
-    width: '40px',
-    height: '40px',
+    width: '36px',
+    height: '36px',
+    minWidth: '36px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -256,12 +262,14 @@ const styles = {
     color: '#FFCE3B',
     flexShrink: 0,
     transition: 'background 0.2s',
+    padding: 0,
   },
   dots: {
     display: 'flex',
     justifyContent: 'center',
     gap: '8px',
-    marginTop: '24px',
+    marginTop: '20px',
+    flexWrap: 'wrap',
   },
   dot: {
     width: '8px',
@@ -271,6 +279,7 @@ const styles = {
     border: 'none',
     cursor: 'pointer',
     padding: 0,
+    flexShrink: 0,
     transition: 'background 0.2s',
   },
   dotActive: {
