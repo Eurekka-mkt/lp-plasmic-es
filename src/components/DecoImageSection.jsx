@@ -1,0 +1,5 @@
+export default function DecoImageSection() {
+  return (
+    <section className="ρd__all ρd__section ρq7G2X"><div className="ρduYb6 __wab_img-wrapper" style={{height: "auto"}}><img alt="" aria-hidden="true" className="__wab_img-spacer-svg" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjYxMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4=" style={{width: "100%", height: "auto", minHeight: "100%"}}/><picture className="__wab_picture"><source type="image/webp" srcSet="https://img.plasmic.app/img-optimizer/v1/img?src=https%3A%2F%2Fimg.plasmic.app%2Fimg-optimizer%2Fv1%2Fimg%2F37712e752767fc6b43bfce94aa258401.png&amp;q=75&amp;f=webp 1x"/><img alt="" loading="lazy" className="__wab_img" decoding="async" src="https://img.plasmic.app/img-optimizer/v1/img?src=https%3A%2F%2Fimg.plasmic.app%2Fimg-optimizer%2Fv1%2Fimg%2F37712e752767fc6b43bfce94aa258401.png&amp;q=75" srcSet="https://img.plasmic.app/img-optimizer/v1/img?src=https%3A%2F%2Fimg.plasmic.app%2Fimg-optimizer%2Fv1%2Fimg%2F37712e752767fc6b43bfce94aa258401.png&amp;q=75 1x" style={{width: 0, height: 0}}/></picture></div></section>
+  );
+}
