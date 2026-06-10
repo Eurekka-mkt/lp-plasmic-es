@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 const therapists = [
   {
@@ -75,12 +75,22 @@ function getVisibleCount() {
   return 3;
 }
 
+function isMobile() {
+  if (typeof window === 'undefined') return false;
+  return window.innerWidth < 600;
+}
+
 export default function TherapistCarousel() {
   const [current, setCurrent] = useState(0);
   const [visible, setVisible] = useState(getVisibleCount);
+  const [mobile, setMobile] = useState(isMobile);
+  const touchRef = useRef({ startX: 0, startY: 0 });
 
   useEffect(() => {
-    const handle = () => setVisible(getVisibleCount());
+    const handle = () => {
+      setVisible(getVisibleCount());
+      setMobile(isMobile());
+    };
     window.addEventListener('resize', handle);
     return () => window.removeEventListener('resize', handle);
   }, []);
@@ -103,26 +113,56 @@ export default function TherapistCarousel() {
 
   const safeIndex = Math.min(current, maxIndex);
 
+  const handleTouchStart = (e) => {
+    touchRef.current.startX = e.touches[0].clientX;
+    touchRef.current.startY = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (e) => {
+    const dx = e.changedTouches[0].clientX - touchRef.current.startX;
+    const dy = e.changedTouches[0].clientY - touchRef.current.startY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+      if (dx < 0) next();
+      else prev();
+    }
+  };
+
+  const gap = mobile ? 0 : 12;
+
   return (
     <section style={styles.section}>
       <div style={styles.inner}>
         <h2 style={styles.title}>Conozca a nuestros terapeutas</h2>
         <p style={styles.subtitle}>Profesionales certificados listos para acompañarte</p>
-        <div style={styles.carouselWrapper}>
-          <button style={styles.arrow} onClick={prev} aria-label="Anterior">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
-          </button>
-          <div style={styles.track}>
+        <div style={{ ...styles.carouselWrapper, gap: mobile ? '0' : '8px' }}>
+          {!mobile && (
+            <button style={styles.arrow} onClick={prev} aria-label="Anterior">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="15 18 9 12 15 6" />
+              </svg>
+            </button>
+          )}
+          <div
+            style={styles.track}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
             <div
               style={{
                 ...styles.slider,
-                transform: `translateX(calc(-${safeIndex} * (${100 / visible}% + ${12 / visible}px)))`,
+                gap: `${gap}px`,
+                transform: `translateX(calc(-${safeIndex} * (${100 / visible}% + ${gap / visible}px)))`,
               }}
             >
               {therapists.map((t, i) => (
-                <div key={i} style={{ ...styles.card, flex: `0 0 calc(${100 / visible}% - ${(12 * (visible - 1)) / visible}px)` }}>
+                <div
+                  key={i}
+                  style={{
+                    ...styles.card,
+                    flex: `0 0 calc(${100 / visible}% - ${(gap * (visible - 1)) / visible}px)`,
+                    ...(mobile ? { margin: '0 auto', maxWidth: '280px' } : {}),
+                  }}
+                >
                   <div style={styles.photoWrap}>
                     <img
                       src={t.photo}
@@ -139,11 +179,13 @@ export default function TherapistCarousel() {
               ))}
             </div>
           </div>
-          <button style={styles.arrow} onClick={next} aria-label="Próximo">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-          </button>
+          {!mobile && (
+            <button style={styles.arrow} onClick={next} aria-label="Próximo">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            </button>
+          )}
         </div>
         <div style={styles.dots}>
           {Array.from({ length: maxIndex + 1 }).map((_, i) => (
@@ -168,6 +210,7 @@ const styles = {
     boxSizing: 'border-box',
     fontFamily: 'inherit',
     display: 'block',
+    overflow: 'hidden',
   },
   inner: {
     maxWidth: '1100px',
@@ -193,7 +236,6 @@ const styles = {
   carouselWrapper: {
     display: 'flex',
     alignItems: 'center',
-    gap: '8px',
     width: '100%',
     boxSizing: 'border-box',
   },
@@ -204,7 +246,6 @@ const styles = {
   },
   slider: {
     display: 'flex',
-    gap: '12px',
     transition: 'transform 0.45s cubic-bezier(0.4, 0, 0.2, 1)',
     willChange: 'transform',
   },
