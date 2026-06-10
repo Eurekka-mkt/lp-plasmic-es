@@ -162,7 +162,7 @@ export default function TherapistCarousel() {
 
 const styles = {
   section: {
-    background: '#3a1447',
+    background: '#ffffff',
     padding: '48px 0',
     width: '100%',
     boxSizing: 'border-box',
@@ -177,7 +177,7 @@ const styles = {
     boxSizing: 'border-box',
   },
   title: {
-    color: '#FFCE3B',
+    color: '#5f236f',
     fontSize: 'clamp(1.25rem, 4vw, 2rem)',
     fontWeight: 700,
     textAlign: 'center',
@@ -185,7 +185,7 @@ const styles = {
     lineHeight: 1.2,
   },
   subtitle: {
-    color: '#bfa7c5',
+    color: '#666',
     fontSize: 'clamp(0.85rem, 2.5vw, 1rem)',
     textAlign: 'center',
     margin: '0 0 32px',
@@ -209,19 +209,19 @@ const styles = {
     willChange: 'transform',
   },
   card: {
-    background: '#4a1a5e',
+    background: '#f5f0f7',
     borderRadius: '14px',
     overflow: 'hidden',
     display: 'flex',
     flexDirection: 'column',
-    boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+    boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
     flexShrink: 0,
   },
   photoWrap: {
     width: '100%',
     aspectRatio: '3 / 4',
     overflow: 'hidden',
-    background: '#5f236f',
+    background: '#e8dced',
   },
   photo: {
     width: '100%',
@@ -237,20 +237,20 @@ const styles = {
     gap: '4px',
   },
   name: {
-    color: '#f8f8f8',
+    color: '#2d2d2d',
     fontSize: '0.875rem',
     fontWeight: 600,
     lineHeight: 1.3,
   },
   formation: {
-    color: '#FFCE3B',
+    color: '#5f236f',
     fontSize: '0.75rem',
     fontWeight: 400,
     lineHeight: 1.4,
   },
   arrow: {
-    background: 'rgba(255,206,59,0.15)',
-    border: '1px solid rgba(255,206,59,0.3)',
+    background: 'rgba(95,35,111,0.08)',
+    border: '1px solid rgba(95,35,111,0.2)',
     borderRadius: '50%',
     width: '36px',
     height: '36px',
@@ -259,7 +259,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     cursor: 'pointer',
-    color: '#FFCE3B',
+    color: '#5f236f',
     flexShrink: 0,
     transition: 'background 0.2s',
     padding: 0,
@@ -275,7 +275,7 @@ const styles = {
     width: '8px',
     height: '8px',
     borderRadius: '50%',
-    background: 'rgba(255,206,59,0.3)',
+    background: 'rgba(95,35,111,0.2)',
     border: 'none',
     cursor: 'pointer',
     padding: 0,
@@ -283,6 +283,6 @@ const styles = {
     transition: 'background 0.2s',
   },
   dotActive: {
-    background: '#FFCE3B',
+    background: '#5f236f',
   },
 };
