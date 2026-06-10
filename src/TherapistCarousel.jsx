@@ -168,7 +168,7 @@ const styles = {
     boxSizing: 'border-box',
     fontFamily: 'inherit',
     display: 'block',
-    margin: '48px'
+    margin: '24px'
   },
   inner: {
     maxWidth: '1100px',
