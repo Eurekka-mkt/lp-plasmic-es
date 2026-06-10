@@ -80,8 +80,9 @@ export default function App() {
         <PricingSection />
         <FinalCTASection />
         <ClosingSection />
+        <Footer />
       </div>
-      <Footer />
+      
     </div>
   );
 }
