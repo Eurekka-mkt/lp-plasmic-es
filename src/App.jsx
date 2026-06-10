@@ -66,24 +66,22 @@ export default function App() {
           title="gtm"
         />
       </noscript>
-      <div className="flex flex-col">
-        <div className="ρd__all ρd__div ρr-jrVUo ρdss ρmns ρtns-jrVUo ρtns-ohDid ρmi4J9">
-          <HeroSection />
-          <TherapistCarousel />
-          <DecoImageSection />
-          <TherapySignalsSection />
-          <WhyEurekkaSection />
-          <TherapyBenefitsSection />
-          <TestimonialsSection />
-          <ProcessSection />
-          <VideoSection />
-          <StatsSection />
-          <PricingSection />
-          <FinalCTASection />
-          <ClosingSection />
-        </div>
-        <Footer />
+      <div className="ρd__all ρd__div ρr-jrVUo ρdss ρmns ρtns-jrVUo ρtns-ohDid ρmi4J9">
+        <HeroSection />
+        <TherapistCarousel />
+        <DecoImageSection />
+        <TherapySignalsSection />
+        <WhyEurekkaSection />
+        <TherapyBenefitsSection />
+        <TestimonialsSection />
+        <ProcessSection />
+        <VideoSection />
+        <StatsSection />
+        <PricingSection />
+        <FinalCTASection />
+        <ClosingSection />
       </div>
+      <Footer />
     </div>
   );
 }
