@@ -1,74 +1,4 @@
-import { useState, useEffect } from 'react';
-
-const countryCurrencyMap = {
-  AR: 'Peso Argentino (ARS)',
-  BO: 'Boliviano (BOB)',
-  BR: 'Real Brasileño (BRL)',
-  CL: 'Peso Chileno (CLP)',
-  CO: 'Peso Colombiano (COP)',
-  CR: 'Colón Costarricense (CRC)',
-  CU: 'Peso Cubano (CUP)',
-  DO: 'Peso Dominicano (DOP)',
-  EC: 'Dólar Estadounidense (USD)',
-  SV: 'Dólar Estadounidense (USD)',
-  GT: 'Quetzal (GTQ)',
-  HN: 'Lempira (HNL)',
-  MX: 'Peso Mexicano (MXN)',
-  NI: 'Córdoba (NIO)',
-  PA: 'Balboa / Dólar (PAB/USD)',
-  PY: 'Guaraní (PYG)',
-  PE: 'Sol Peruano (PEN)',
-  PR: 'Dólar Estadounidense (USD)',
-  UY: 'Peso Uruguayo (UYU)',
-  VE: 'Bolívar (VES)',
-  ES: 'Euro (EUR)',
-  US: 'Dólar Estadounidense (USD)',
-  PT: 'Euro (EUR)',
-  FR: 'Euro (EUR)',
-  DE: 'Euro (EUR)',
-  IT: 'Euro (EUR)',
-  GB: 'Libra Esterlina (GBP)',
-  CA: 'Dólar Canadiense (CAD)',
-};
-
-function useCurrency() {
-  const [currency, setCurrency] = useState('');
-
-  useEffect(() => {
-    async function detect() {
-      try {
-        const res = await fetch('https://ipapi.co/json/');
-        if (!res.ok) throw new Error('fetch failed');
-        const data = await res.json();
-        const code = data.country_code;
-        if (code && countryCurrencyMap[code]) {
-          setCurrency(countryCurrencyMap[code]);
-        } else if (data.currency) {
-          setCurrency(data.currency);
-        }
-      } catch {
-        try {
-          const langs = navigator.languages || [navigator.language];
-          for (const lang of langs) {
-            const parts = lang.split('-');
-            if (parts.length > 1) {
-              const country = parts[1].toUpperCase();
-              if (countryCurrencyMap[country]) {
-                setCurrency(countryCurrencyMap[country]);
-                return;
-              }
-            }
-          }
-        } catch {
-          // silent
-        }
-      }
-    }
-    detect();
-  }, []);
-
-  return currency;
-}
+import { useCountry } from '../useCountry';
 
 const plans = [
   { value: 35, label: 'US$ 35.00' },
@@ -79,7 +9,7 @@ const plans = [
 ];
 
 export default function PricingSection() {
-  const currency = useCurrency();
+  const { currency } = useCountry();
 
   return (
     <section style={styles.section} id="prices">
