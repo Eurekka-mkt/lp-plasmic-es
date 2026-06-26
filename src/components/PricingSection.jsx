@@ -35,7 +35,7 @@ export default function PricingSection() {
               </div>
               {currency && (
                 <div style={styles.currencyBadge}>
-                  Pague na moeda {currency}
+                  Pague en {currency}
                 </div>
               )}
             </a>

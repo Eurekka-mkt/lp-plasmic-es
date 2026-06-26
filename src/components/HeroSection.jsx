@@ -28,7 +28,7 @@ export default function HeroSection() {
 
           {currency && (
             <div style={styles.currencyBadge}>
-              Pague na moeda {currency}
+              Pague en {currency}
             </div>
           )}
 
