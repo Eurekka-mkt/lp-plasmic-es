@@ -1,157 +1,121 @@
-import { useState, useEffect, useRef } from 'react';
+  const countryCodeToPaymentFlags = {
+    MX: [
+      {
+        name: 'OXXO',
+        src: 'https://upload.wikimedia.org/wikipedia/en/thumb/4/40/OXXO_logo.svg/1280px-OXXO_logo.svg.png',
+        bg: 'bg-white',
+      },
+      {
+        name: 'Mercado Pago',
+        src: 'https://cdn.simpleicons.org/mercadopago',
+        bg: 'bg-white',
+      },
+      {
+        name: 'SPEI',
+        src: 'https://www.airwallex.com/docs/assets/contentful/images.ctfassets.net/c3n7jozh84hr/TNlgL2sXeD99jMhN6uoo6/5236e36ed62f428cc561402c7e7efdd3/spei.png',
+        bg: 'bg-white',
+      },
+    ],
 
-const countryNames = {
-  AR: 'Argentina',
-  BO: 'Bolivia',
-  BR: 'Brasil',
-  CL: 'Chile',
-  CO: 'Colombia',
-  CR: 'Costa Rica',
-  CU: 'Cuba',
-  DO: 'República Dominicana',
-  EC: 'Ecuador',
-  SV: 'El Salvador',
-  GT: 'Guatemala',
-  HN: 'Honduras',
-  MX: 'México',
-  NI: 'Nicaragua',
-  PA: 'Panamá',
-  PY: 'Paraguay',
-  PE: 'Perú',
-  PR: 'Puerto Rico',
-  UY: 'Uruguay',
-  VE: 'Venezuela',
-  ES: 'España',
-  US: 'Estados Unidos',
-  PT: 'Portugal',
-  FR: 'Francia',
-  DE: 'Alemania',
-  IT: 'Italia',
-  GB: 'Reino Unido',
-  CA: 'Canadá',
-};
+    CO: [
+      {
+        name: 'Efecty',
+        src: 'https://logovtor.com/wp-content/uploads/2023/05/efecty-logo-vector-2023.png',
+        bg: 'bg-white',
+      },
+      {
+        name: 'Nequi',
+        src: 'https://logowik.com/content/uploads/images/nequi8774.logowik.com.webp',
+        bg: 'bg-white',
+      },
+      {
+        name: 'PSE',
+        src: 'https://edge.pse.com.ph/clogo/478/cl5aa63481r629.png',
+        bg: 'bg-white',
+      },
+      {
+        name: 'Bancolombia',
+        src: 'https://bogota.gov.co/sites/default/files/styles/1050px/public/2020-04/logo-bancolombia-2.jpg',
+        bg: 'bg-white',
+      },
+      {
+        name: 'PayPal',
+        src: 'https://cdn.simpleicons.org/paypal',
+        bg: 'bg-white',
+      },
+    ],
 
-const countryCurrencyMap = {
-  AR: 'Peso Argentino (ARS)',
-  BO: 'Boliviano (BOB)',
-  BR: 'Real Brasileño (BRL)',
-  CL: 'Peso Chileno (CLP)',
-  CO: 'Peso Colombiano (COP)',
-  CR: 'Colón Costarricense (CRC)',
-  CU: 'Peso Cubano (CUP)',
-  DO: 'Peso Dominicano (DOP)',
-  EC: 'Dólar Estadounidense (USD)',
-  SV: 'Dólar Estadounidense (USD)',
-  GT: 'Quetzal (GTQ)',
-  HN: 'Lempira (HNL)',
-  MX: 'Peso Mexicano (MXN)',
-  NI: 'Córdoba (NIO)',
-  PA: 'Balboa / Dólar (PAB/USD)',
-  PY: 'Guaraní (PYG)',
-  PE: 'Sol Peruano (PEN)',
-  PR: 'Dólar Estadounidense (USD)',
-  UY: 'Peso Uruguayo (UYU)',
-  VE: 'Bolívar (VES)',
-  ES: 'Euro (EUR)',
-  US: 'Dólar Estadounidense (USD)',
-  PT: 'Euro (EUR)',
-  FR: 'Euro (EUR)',
-  DE: 'Euro (EUR)',
-  IT: 'Euro (EUR)',
-  GB: 'Libra Esterlina (GBP)',
-  CA: 'Dólar Canadiense (CAD)',
-};
+    AR: [
+      {
+        name: 'Mercado Pago',
+        src: 'https://cdn.simpleicons.org/mercadopago',
+        bg: 'bg-white',
+      },
+      {
+        name: 'PayPal',
+        src: 'https://cdn.simpleicons.org/paypal',
+        bg: 'bg-white',
+      },
+    ],
 
-let cachedCountry = null;
-let fetchPromise = null;
-let listeners = new Set();
+    PE: [
+      {
+        name: 'Yape',
+        src: 'https://upload.wikimedia.org/wikipedia/commons/7/76/Yape_peru_logotype.svg',
+        bg: 'bg-white',
+      },
+      {
+        name: 'Pago Efectivo',
+        src: 'https://images.seeklogo.com/logo-png/44/1/pago-efectivo-2020-logo-png_seeklogo-441048.png',
+        bg: 'bg-white',
+      },
+      {
+        name: 'PayPal',
+        src: 'https://cdn.simpleicons.org/paypal',
+        bg: 'bg-white',
+      },
+    ],
 
-function notify() {
-  listeners.forEach(fn => fn(cachedCountry));
-}
+    CL: [
+      {
+        name: 'Sencillito',
+        src: 'https://upload.wikimedia.org/wikipedia/commons/5/59/Sencillito_logo.svg',
+        bg: 'bg-white',
+      },
+      {
+        name: 'PayPal',
+        src: 'https://cdn.simpleicons.org/paypal',
+        bg: 'bg-white',
+      },
+    ],
 
-function fetchCountry() {
-  if (fetchPromise) return fetchPromise;
+    UY: [
+      {
+        name: 'PayPal',
+        src: 'https://cdn.simpleicons.org/paypal',
+        bg: 'bg-white',
+      },
+    ],
 
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 4000);
-
-  fetchPromise = fetch('https://ipapi.co/json/', { signal: controller.signal })
-    .then(res => {
-      clearTimeout(timeout);
-      if (!res.ok) throw new Error('fetch failed');
-      return res.json();
-    })
-    .then(data => {
-      const code = data.country_code;
-      cachedCountry = {
-        code,
-        name: countryNames[code] || data.country_name || '',
-        currency: countryCurrencyMap[code] || data.currency || '',
-      };
-      notify();
-      return cachedCountry;
-    })
-    .catch(() => {
-      clearTimeout(timeout);
-      if (!cachedCountry) {
-        cachedCountry = detectFromLanguage() || { name: '', currency: '', code: '' };
+    BR: [
+      {
+        name: "PIX",
+        src: "https://images.seeklogo.com/logo-png/38/1/pix-banco-central-logo-png_seeklogo-388843.png",
+        bg: "bg-white"
       }
-      notify();
-      return cachedCountry;
-    });
-
-  return fetchPromise;
-}
-
-function detectFromLanguage() {
-  try {
-    const langs = navigator.languages || [navigator.language];
-    for (const lang of langs) {
-      const parts = lang.split('-');
-      if (parts.length > 1) {
-        const c = parts[1].toUpperCase();
-        if (countryNames[c]) {
-          return {
-            code: c,
-            name: countryNames[c],
-            currency: countryCurrencyMap[c] || '',
-          };
-        }
-      }
-    }
-  } catch {
-    // silent
+    ]
   }
-  return null;
-}
 
-// Start fetching immediately on module load
-fetchCountry();
-
-export function useCountry() {
-  const [country, setCountry] = useState(() => {
-    // Only use cache if the fetch already resolved
-    if (cachedCountry) return cachedCountry;
-    // Don't show language fallback — wait for the API
-    return { name: '', currency: '', code: '' };
-  });
+export const useCountry = () => {
+  const [countryCode, setCountryCode] =
+    useState<keyof typeof countryCodeToPaymentFlags>()
 
   useEffect(() => {
-    // If cache already has data from API, use it immediately
-    if (cachedCountry) {
-      setCountry(cachedCountry);
-      return;
-    }
+    const url = "https://api.ipdata.co?api-key=63d72f8354d59c5444f4e2d113115b4e3ec28ad066f32f5588cf07ac"
+        axios.get(url).then(resp => {
+            setCountryCode(resp.data.country_code)
+        })
+  }, [])
 
-    // Subscribe to updates
-    const handler = (data) => {
-      if (data) setCountry(data);
-    };
-    listeners.add(handler);
-
-    return () => { listeners.delete(handler); };
-  }, []);
-
-  return country;
+  return {countryCode}
 }
