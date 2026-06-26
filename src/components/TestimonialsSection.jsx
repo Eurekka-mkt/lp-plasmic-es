@@ -11,6 +11,6 @@ export default function TestimonialsSection() {
       display: inline-block;
       vertical-align: top;
     }
-  `}} /></div><div className="ρd__all ρd__div ρcKyqx"><div className="ρd__all ρd__div ρt ρhNDlR">Aprobado por quienes ya han experimentado el cuidado de Eurekka</div><a className="ρd__all ρd__button ρr-jrVUo ρdss ρmns ρtns-jrVUo ρtns-ohDid ρwdgak ρi ρrduNy" href="/_sites/lp-espanhol-erika.plasmic.run#prices"><div className="ρd__all ρd__div ρy6ZF"><span className="__wab_slot ρs ρv4LPc"><div className="ρd__all ρd__div ρt ρaUf2W">TAMBIÉN QUIERO CUIDAR MI SALUD MENTAL</div></span></div></a></div></div></section>
+  `}} /></div><div className="ρd__all ρd__div ρcKyqx"><div className="ρd__all ρd__div ρt ρhNDlR">Aprobado por quienes ya han experimentado el cuidado de Eurekka</div><a className="ρd__all ρd__button ρr-jrVUo ρdss ρmns ρtns-jrVUo ρtns-ohDid ρwdgak ρi ρrduNy" href="#prices"><div className="ρd__all ρd__div ρy6ZF"><span className="__wab_slot ρs ρv4LPc"><div className="ρd__all ρd__div ρt ρaUf2W">TAMBIÉN QUIERO CUIDAR MI SALUD MENTAL</div></span></div></a></div></div></section>
   );
 }
