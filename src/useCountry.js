@@ -1,5 +1,8 @@
 const countryCodeToPaymentFlags = {
-    MX: [
+  MX: {
+    currency: 'Mexican Peso',
+    currencyCode: 'MXN',
+    paymentMethods: [
       {
         name: 'OXXO',
         src: 'https://upload.wikimedia.org/wikipedia/en/thumb/4/40/OXXO_logo.svg/1280px-OXXO_logo.svg.png',
@@ -16,8 +19,12 @@ const countryCodeToPaymentFlags = {
         bg: 'bg-white',
       },
     ],
+  },
 
-    CO: [
+  CO: {
+    currency: 'Colombian Peso',
+    currencyCode: 'COP',
+    paymentMethods: [
       {
         name: 'Efecty',
         src: 'https://logovtor.com/wp-content/uploads/2023/05/efecty-logo-vector-2023.png',
@@ -44,8 +51,12 @@ const countryCodeToPaymentFlags = {
         bg: 'bg-white',
       },
     ],
+  },
 
-    AR: [
+  AR: {
+    currency: 'Argentine Peso',
+    currencyCode: 'ARS',
+    paymentMethods: [
       {
         name: 'Mercado Pago',
         src: 'https://cdn.simpleicons.org/mercadopago',
@@ -57,8 +68,12 @@ const countryCodeToPaymentFlags = {
         bg: 'bg-white',
       },
     ],
+  },
 
-    PE: [
+  PE: {
+    currency: 'Peruvian Sol',
+    currencyCode: 'PEN',
+    paymentMethods: [
       {
         name: 'Yape',
         src: 'https://upload.wikimedia.org/wikipedia/commons/7/76/Yape_peru_logotype.svg',
@@ -75,8 +90,12 @@ const countryCodeToPaymentFlags = {
         bg: 'bg-white',
       },
     ],
+  },
 
-    CL: [
+  CL: {
+    currency: 'Chilean Peso',
+    currencyCode: 'CLP',
+    paymentMethods: [
       {
         name: 'Sencillito',
         src: 'https://upload.wikimedia.org/wikipedia/commons/5/59/Sencillito_logo.svg',
@@ -88,32 +107,42 @@ const countryCodeToPaymentFlags = {
         bg: 'bg-white',
       },
     ],
+  },
 
-    UY: [
+  UY: {
+    currency: 'Uruguayan Peso',
+    currencyCode: 'UYU',
+    paymentMethods: [
       {
         name: 'PayPal',
         src: 'https://cdn.simpleicons.org/paypal',
         bg: 'bg-white',
       },
     ],
+  },
 
-    BR: [
+  BR: {
+    currency: 'Brazilian Real',
+    currencyCode: 'BRL',
+    paymentMethods: [
       {
-        name: "PIX",
-        src: "https://images.seeklogo.com/logo-png/38/1/pix-banco-central-logo-png_seeklogo-388843.png",
-        bg: "bg-white"
-      }
-    ]
-  }
-
+        name: 'PIX',
+        src: 'https://images.seeklogo.com/logo-png/38/1/pix-banco-central-logo-png_seeklogo-388843.png',
+        bg: 'bg-white',
+      },
+    ],
+  },
+};
 export const useCountry = () => {
   const [countryCode, setCountryCode] =
     useState<keyof typeof countryCodeToPaymentFlags>()
+const [currency,setCurrency] = useState()
 
   useEffect(() => {
     const url = "https://api.ipdata.co?api-key=63d72f8354d59c5444f4e2d113115b4e3ec28ad066f32f5588cf07ac"
         axios.get(url).then(resp => {
             setCountryCode(resp.data.country_code)
+          setCurrency(countryCodeToPaymentFlags[resp.data.country_code].currency)
         })
   }, [])
 
