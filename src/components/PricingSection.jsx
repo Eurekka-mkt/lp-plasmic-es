@@ -156,9 +156,11 @@ const styles = {
   },
   grid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+    gridTemplateColumns: 'repeat(2, 1fr)',
     gap: '16px',
     marginBottom: '24px',
+    maxWidth: '600px',
+    margin: '0 auto 24px',
   },
   card: {
     display: 'flex',
@@ -168,11 +170,12 @@ const styles = {
     background: '#f9f9f9',
     border: '2px solid #e0e0e0',
     borderRadius: '12px',
-    padding: '24px 16px 16px',
+    padding: '28px 24px 20px',
     textDecoration: 'none',
     transition: 'border-color 0.2s, box-shadow 0.2s, transform 0.2s',
     cursor: 'pointer',
     gap: '12px',
+    minWidth: 0,
   },
   cardContent: {
     display: 'flex',
