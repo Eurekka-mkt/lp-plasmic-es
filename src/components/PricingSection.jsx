@@ -1,11 +1,206 @@
+import { useState, useEffect } from 'react';
+
+const countryCurrencyMap = {
+  AR: 'Peso Argentino (ARS)',
+  BO: 'Boliviano (BOB)',
+  BR: 'Real Brasileño (BRL)',
+  CL: 'Peso Chileno (CLP)',
+  CO: 'Peso Colombiano (COP)',
+  CR: 'Colón Costarricense (CRC)',
+  CU: 'Peso Cubano (CUP)',
+  DO: 'Peso Dominicano (DOP)',
+  EC: 'Dólar Estadounidense (USD)',
+  SV: 'Dólar Estadounidense (USD)',
+  GT: 'Quetzal (GTQ)',
+  HN: 'Lempira (HNL)',
+  MX: 'Peso Mexicano (MXN)',
+  NI: 'Córdoba (NIO)',
+  PA: 'Balboa / Dólar (PAB/USD)',
+  PY: 'Guaraní (PYG)',
+  PE: 'Sol Peruano (PEN)',
+  PR: 'Dólar Estadounidense (USD)',
+  UY: 'Peso Uruguayo (UYU)',
+  VE: 'Bolívar (VES)',
+  ES: 'Euro (EUR)',
+  US: 'Dólar Estadounidense (USD)',
+  PT: 'Euro (EUR)',
+  FR: 'Euro (EUR)',
+  DE: 'Euro (EUR)',
+  IT: 'Euro (EUR)',
+  GB: 'Libra Esterlina (GBP)',
+  CA: 'Dólar Canadiense (CAD)',
+};
+
+function useCurrency() {
+  const [currency, setCurrency] = useState('');
+
+  useEffect(() => {
+    async function detect() {
+      try {
+        const res = await fetch('https://ipapi.co/json/');
+        if (!res.ok) throw new Error('fetch failed');
+        const data = await res.json();
+        const code = data.country_code;
+        if (code && countryCurrencyMap[code]) {
+          setCurrency(countryCurrencyMap[code]);
+        } else if (data.currency) {
+          setCurrency(data.currency);
+        }
+      } catch {
+        try {
+          const langs = navigator.languages || [navigator.language];
+          for (const lang of langs) {
+            const parts = lang.split('-');
+            if (parts.length > 1) {
+              const country = parts[1].toUpperCase();
+              if (countryCurrencyMap[country]) {
+                setCurrency(countryCurrencyMap[country]);
+                return;
+              }
+            }
+          }
+        } catch {
+          // silent
+        }
+      }
+    }
+    detect();
+  }, []);
+
+  return currency;
+}
+
+const plans = [
+  { value: 35, label: 'US$ 35.00' },
+  { value: 40, label: 'US$ 40.00' },
+  { value: 50, label: 'US$ 50.00' },
+  { value: 60, label: 'US$ 60.00' },
+  { value: 70, label: 'US$ 70.00' },
+];
+
 export default function PricingSection() {
+  const currency = useCurrency();
+
   return (
-    <section className="ρd__all ρd__section ρjm6No" id="prices"><div className="ρd__all ρd__div ρqsn93"><div className="ρd__all ρd__div ρt ρpiYef"> ¿Cuánto te sentirías cómodo invirtiendo en tu terapia por sesión?
-</div><div className="ρd__all ρd__div ρt ρkhFtw">Contamos con terapeutas con diferentes niveles de experiencia, lo que da como resultado una variedad de valores.</div><div className="ρd__all ρd__div ρt ρxwR7A">Elige una opción:</div><div className="ρd__all ρd__div ρguAeX"><div className="ρd__all ρd__div ρglvE"><div className="ρd__all ρd__div ρcWTkg"><a className="ρd__all ρd__button ρr-jrVUo ρdss ρmns ρtns-jrVUo ρtns-ohDid ρwzF7P ρi ρaUwZx" href="https://ci-terapia-es.eurekka.me/#/es/appointment?value=35&amp;source=padrao+undefined+undefined+undefined+undefined"><div className="ρd__all ρd__div ρtOdPh"><span className="__wab_slot ρs ρeBk1J"><div className="ρd__all ρd__div ρiiKhD"><div className="ρd__all ρd__div ρu9Awx"><div className="ρd__all ρd__div ρt ρz7XtT">US$ 35.00
-por sesión</div></div></div></span></div></a></div></div><div className="ρd__all ρd__div ρwxnlt"><div className="ρd__all ρd__div ρkBiqw"><a className="ρd__all ρd__button ρr-jrVUo ρdss ρmns ρtns-jrVUo ρtns-ohDid ρwzF7P ρi ρn8XbZ" href="https://ci-terapia-es.eurekka.me/#/es/appointment?value=40&amp;source=padrao+undefined+undefined+undefined+undefined"><div className="ρd__all ρd__div ρtOdPh"><span className="__wab_slot ρs ρeBk1J"><div className="ρd__all ρd__div ρt ρmMqji">US$ 40.00
-por sesión</div></span></div></a></div><div className="ρd__all ρd__div ρ_6WMmX"><a className="ρd__all ρd__button ρr-jrVUo ρdss ρmns ρtns-jrVUo ρtns-ohDid ρwzF7P ρi ρkjcHk" href="https://ci-terapia-es.eurekka.me/#/es/appointment?value=50&amp;source=padrao+undefined+undefined+undefined+undefined"><div className="ρd__all ρd__div ρtOdPh"><span className="__wab_slot ρs ρeBk1J"><div className="ρd__all ρd__div ρt ρwlFOu">US$ 50.00
-por sesión</div></span></div></a></div></div><div className="ρd__all ρd__div ρbEydg"><div className="ρd__all ρd__div ρmMr2O"><a className="ρd__all ρd__button ρr-jrVUo ρdss ρmns ρtns-jrVUo ρtns-ohDid ρwzF7P ρi ρdMlO" href="https://ci-terapia-es.eurekka.me/#/es/appointment?value=60&amp;source=padrao+undefined+undefined+undefined+undefined"><div className="ρd__all ρd__div ρtOdPh"><span className="__wab_slot ρs ρeBk1J"><div className="ρd__all ρd__div ρt ρgTdOl">US$ 60.00
-por sesión</div></span></div></a></div><div className="ρd__all ρd__div ρ_02Msi"><a className="ρd__all ρd__button ρr-jrVUo ρdss ρmns ρtns-jrVUo ρtns-ohDid ρwzF7P ρi ρlVqiQ" href="https://ci-terapia-es.eurekka.me/#/es/appointment?value=70&amp;source=padrao+undefined+undefined+undefined+undefined"><div className="ρd__all ρd__div ρtOdPh"><span className="__wab_slot ρs ρeBk1J"><div className="ρd__all ρd__div ρt ρu5Os">US$ 70.00
-por sesión</div></span></div></a></div></div></div><div className="ρd__all ρd__div ρt ρd36M2">Tu cita será confirmada después del pago</div></div></section>
+    <section style={styles.section} id="prices">
+      <div style={styles.inner}>
+        <h2 style={styles.title}>
+          ¿Cuánto te sentirías cómodo invirtiendo en tu terapia por sesión?
+        </h2>
+        <p style={styles.subtitle}>
+          Contamos con terapeutas con diferentes niveles de experiencia, lo que da como resultado una variedad de valores.
+        </p>
+        <p style={styles.choose}>Elige una opción:</p>
+
+        <div style={styles.grid}>
+          {plans.map((plan) => (
+            <a
+              key={plan.value}
+              href={`https://ci-terapia-es.eurekka.me/#/es/appointment?value=${plan.value}&source=padrao+undefined+undefined+undefined+undefined`}
+              style={styles.card}
+            >
+              <div style={styles.cardContent}>
+                <span style={styles.price}>{plan.label}</span>
+                <span style={styles.perSession}>por sesión</span>
+              </div>
+              {currency && (
+                <div style={styles.currencyBadge}>
+                  Pague na moeda {currency}
+                </div>
+              )}
+            </a>
+          ))}
+        </div>
+
+        <p style={styles.footer}>Tu cita será confirmada después del pago</p>
+      </div>
+    </section>
   );
 }
+
+const styles = {
+  section: {
+    background: '#ffffff',
+    padding: '64px 0',
+    width: '100%',
+    boxSizing: 'border-box',
+    fontFamily: '"Inter", sans-serif',
+    gridColumn: '1 / -1',
+  },
+  inner: {
+    maxWidth: '900px',
+    width: '100%',
+    margin: '0 auto',
+    padding: '0 24px',
+    boxSizing: 'border-box',
+    textAlign: 'center',
+  },
+  title: {
+    color: '#1a1a1a',
+    fontSize: 'clamp(1.25rem, 3.5vw, 1.75rem)',
+    fontWeight: 700,
+    margin: '0 0 16px',
+    lineHeight: 1.3,
+  },
+  subtitle: {
+    color: '#555',
+    fontSize: 'clamp(0.85rem, 2.5vw, 1rem)',
+    margin: '0 0 8px',
+    lineHeight: 1.5,
+  },
+  choose: {
+    color: '#333',
+    fontSize: '1rem',
+    fontWeight: 600,
+    margin: '0 0 32px',
+  },
+  grid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+    gap: '16px',
+    marginBottom: '24px',
+  },
+  card: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    background: '#f9f9f9',
+    border: '2px solid #e0e0e0',
+    borderRadius: '12px',
+    padding: '24px 16px 16px',
+    textDecoration: 'none',
+    transition: 'border-color 0.2s, box-shadow 0.2s, transform 0.2s',
+    cursor: 'pointer',
+    gap: '12px',
+  },
+  cardContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '4px',
+  },
+  price: {
+    color: '#1a1a1a',
+    fontSize: '1.25rem',
+    fontWeight: 700,
+  },
+  perSession: {
+    color: '#666',
+    fontSize: '0.85rem',
+  },
+  currencyBadge: {
+    background: '#FFCE3B',
+    color: '#1a1a1a',
+    fontSize: '0.7rem',
+    fontWeight: 600,
+    padding: '4px 10px',
+    borderRadius: '20px',
+    whiteSpace: 'nowrap',
+  },
+  footer: {
+    color: '#888',
+    fontSize: '0.85rem',
+    margin: '16px 0 0',
+  },
+};
