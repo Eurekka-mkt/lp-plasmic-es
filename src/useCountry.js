@@ -64,6 +64,45 @@ const countryCurrencyMap = {
 
 let cachedCountry = null;
 let fetchPromise = null;
+let listeners = new Set();
+
+function notify() {
+  listeners.forEach(fn => fn(cachedCountry));
+}
+
+function fetchCountry() {
+  if (fetchPromise) return fetchPromise;
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 4000);
+
+  fetchPromise = fetch('https://ipapi.co/json/', { signal: controller.signal })
+    .then(res => {
+      clearTimeout(timeout);
+      if (!res.ok) throw new Error('fetch failed');
+      return res.json();
+    })
+    .then(data => {
+      const code = data.country_code;
+      cachedCountry = {
+        code,
+        name: countryNames[code] || data.country_name || '',
+        currency: countryCurrencyMap[code] || data.currency || '',
+      };
+      notify();
+      return cachedCountry;
+    })
+    .catch(() => {
+      clearTimeout(timeout);
+      if (!cachedCountry) {
+        cachedCountry = detectFromLanguage() || { name: '', currency: '', code: '' };
+      }
+      notify();
+      return cachedCountry;
+    });
+
+  return fetchPromise;
+}
 
 function detectFromLanguage() {
   try {
@@ -87,59 +126,31 @@ function detectFromLanguage() {
   return null;
 }
 
-function fetchCountry() {
-  if (fetchPromise) return fetchPromise;
-
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 4000);
-
-  fetchPromise = fetch('https://ipapi.co/json/', { signal: controller.signal })
-    .then(res => {
-      clearTimeout(timeout);
-      if (!res.ok) throw new Error('fetch failed');
-      return res.json();
-    })
-    .then(data => {
-      const code = data.country_code;
-      cachedCountry = {
-        code,
-        name: countryNames[code] || data.country_name || '',
-        currency: countryCurrencyMap[code] || data.currency || '',
-      };
-      return cachedCountry;
-    })
-    .catch(() => {
-      clearTimeout(timeout);
-      cachedCountry = detectFromLanguage() || { name: '', currency: '', code: '' };
-      return cachedCountry;
-    });
-
-  return fetchPromise;
-}
-
 // Start fetching immediately on module load
 fetchCountry();
 
 export function useCountry() {
   const [country, setCountry] = useState(() => {
+    // Only use cache if the fetch already resolved
     if (cachedCountry) return cachedCountry;
-    return detectFromLanguage() || { name: '', currency: '', code: '' };
+    // Don't show language fallback — wait for the API
+    return { name: '', currency: '', code: '' };
   });
 
-  const mounted = useRef(true);
-
   useEffect(() => {
-    mounted.current = true;
+    // If cache already has data from API, use it immediately
     if (cachedCountry) {
       setCountry(cachedCountry);
       return;
     }
-    fetchCountry().then(result => {
-      if (mounted.current && result) {
-        setCountry(result);
-      }
-    });
-    return () => { mounted.current = false; };
+
+    // Subscribe to updates
+    const handler = (data) => {
+      if (data) setCountry(data);
+    };
+    listeners.add(handler);
+
+    return () => { listeners.delete(handler); };
   }, []);
 
   return country;
