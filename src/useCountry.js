@@ -146,5 +146,5 @@ const [currency,setCurrency] = useState()
         })
   }, [])
 
-  return {countryCode}
+  return {countryCode, currency}
 }
