@@ -127,21 +127,26 @@ export default function TherapistCarousel() {
     }
   };
 
-  const gap = mobile ? 0 : 12;
+  const gap = mobile ? 0 : 24;
 
   return (
     <section style={styles.section}>
       <div style={styles.inner}>
-        <h2 style={styles.title}>Conozca a nuestros terapeutas</h2>
+        <div style={styles.titleRow}>
+          <span style={styles.titleBar} />
+          <h2 style={styles.title}>Conozca a nuestros terapeutas</h2>
+        </div>
         <p style={styles.subtitle}>Profesionales certificados listos para acompañarte</p>
-        <div style={{ ...styles.carouselWrapper, gap: mobile ? '0' : '8px' }}>
+
+        <div style={styles.carouselOuter}>
           {!mobile && (
             <button style={styles.arrow} onClick={prev} aria-label="Anterior">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="15 18 9 12 15 6" />
               </svg>
             </button>
           )}
+
           <div
             style={styles.track}
             onTouchStart={handleTouchStart}
@@ -160,7 +165,6 @@ export default function TherapistCarousel() {
                   style={{
                     ...styles.card,
                     flex: `0 0 calc(${100 / visible}% - ${(gap * (visible - 1)) / visible}px)`,
-                    ...(mobile ? { margin: '0 auto', maxWidth: '280px' } : {}),
                   }}
                 >
                   <div style={styles.photoWrap}>
@@ -171,6 +175,7 @@ export default function TherapistCarousel() {
                       loading="lazy"
                     />
                   </div>
+                  <div style={styles.goldLine} />
                   <div style={styles.info}>
                     <span style={styles.name}>{t.name}</span>
                     <span style={styles.formation}>{t.formation}</span>
@@ -179,14 +184,16 @@ export default function TherapistCarousel() {
               ))}
             </div>
           </div>
+
           {!mobile && (
-            <button style={styles.arrow} onClick={next} aria-label="Próximo">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <button style={styles.arrow} onClick={next} aria-label="Siguiente">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="9 18 15 12 9 6" />
               </svg>
             </button>
           )}
         </div>
+
         <div style={styles.dots}>
           {Array.from({ length: maxIndex + 1 }).map((_, i) => (
             <button
@@ -204,8 +211,8 @@ export default function TherapistCarousel() {
 
 const styles = {
   section: {
-    background: '#ffffff',
-    padding: '48px 0',
+    background: '#f0f0f0',
+    padding: '64px 0 56px',
     width: '100%',
     boxSizing: 'border-box',
     fontFamily: 'inherit',
@@ -213,29 +220,44 @@ const styles = {
     overflow: 'hidden',
   },
   inner: {
-    maxWidth: '1100px',
+    maxWidth: '1200px',
     width: '100%',
     margin: '0 auto',
-    padding: '0 16px',
+    padding: '0 24px',
     boxSizing: 'border-box',
   },
+  titleRow: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '12px',
+    marginBottom: '12px',
+  },
+  titleBar: {
+    width: '4px',
+    height: '32px',
+    background: '#FFCE3B',
+    borderRadius: '2px',
+    flexShrink: 0,
+  },
   title: {
-    color: '#5f236f',
-    fontSize: 'clamp(1.25rem, 4vw, 2rem)',
+    color: '#1a1a1a',
+    fontSize: 'clamp(1.5rem, 4vw, 2.25rem)',
     fontWeight: 700,
-    textAlign: 'center',
-    margin: '0 0 8px',
+    margin: 0,
     lineHeight: 1.2,
   },
   subtitle: {
-    color: '#666',
-    fontSize: 'clamp(0.85rem, 2.5vw, 1rem)',
+    color: '#555',
+    fontSize: 'clamp(0.9rem, 2.5vw, 1.05rem)',
     textAlign: 'center',
-    margin: '0 0 32px',
+    margin: '0 0 40px',
+    fontWeight: 400,
   },
-  carouselWrapper: {
+  carouselOuter: {
     display: 'flex',
     alignItems: 'center',
+    gap: '16px',
     width: '100%',
     boxSizing: 'border-box',
   },
@@ -250,19 +272,19 @@ const styles = {
     willChange: 'transform',
   },
   card: {
-    background: '#f5f0f7',
-    borderRadius: '14px',
+    background: '#ffffff',
+    borderRadius: '16px',
     overflow: 'hidden',
     display: 'flex',
     flexDirection: 'column',
-    boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+    boxShadow: '0 2px 16px rgba(0,0,0,0.06)',
     flexShrink: 0,
   },
   photoWrap: {
     width: '100%',
     aspectRatio: '3 / 4',
     overflow: 'hidden',
-    background: '#e8dced',
+    background: '#f5f5f5',
   },
   photo: {
     width: '100%',
@@ -271,52 +293,58 @@ const styles = {
     objectPosition: 'top center',
     display: 'block',
   },
+  goldLine: {
+    width: '100%',
+    height: '3px',
+    background: '#FFCE3B',
+  },
   info: {
-    padding: '12px 14px 16px',
+    padding: '16px 18px 20px',
     display: 'flex',
     flexDirection: 'column',
     gap: '4px',
   },
   name: {
-    color: '#2d2d2d',
-    fontSize: '0.875rem',
-    fontWeight: 600,
+    color: '#1a1a1a',
+    fontSize: '0.95rem',
+    fontWeight: 700,
     lineHeight: 1.3,
   },
   formation: {
-    color: '#5f236f',
-    fontSize: '0.75rem',
+    color: '#666',
+    fontSize: '0.8rem',
     fontWeight: 400,
     lineHeight: 1.4,
   },
   arrow: {
-    background: 'rgba(95,35,111,0.08)',
-    border: '1px solid rgba(95,35,111,0.2)',
+    background: '#ffffff',
+    border: '1px solid #ddd',
     borderRadius: '50%',
-    width: '36px',
-    height: '36px',
-    minWidth: '36px',
+    width: '44px',
+    height: '44px',
+    minWidth: '44px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     cursor: 'pointer',
-    color: '#5f236f',
+    color: '#333',
     flexShrink: 0,
-    transition: 'background 0.2s',
+    transition: 'box-shadow 0.2s, border-color 0.2s',
     padding: 0,
+    boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
   },
   dots: {
     display: 'flex',
     justifyContent: 'center',
-    gap: '8px',
-    marginTop: '20px',
+    gap: '10px',
+    marginTop: '32px',
     flexWrap: 'wrap',
   },
   dot: {
-    width: '8px',
-    height: '8px',
+    width: '10px',
+    height: '10px',
     borderRadius: '50%',
-    background: 'rgba(95,35,111,0.2)',
+    background: '#ccc',
     border: 'none',
     cursor: 'pointer',
     padding: 0,
@@ -324,6 +352,6 @@ const styles = {
     transition: 'background 0.2s',
   },
   dotActive: {
-    background: '#5f236f',
+    background: '#FFCE3B',
   },
 };
