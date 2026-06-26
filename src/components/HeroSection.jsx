@@ -7,7 +7,7 @@ export default function HeroSection() {
     <section style={styles.section}>
       <div style={styles.logoBar}>
         <img
-          src="https://s3.amazonaws.com/appforest_uf/f1676049140062x419264094154991700/logo-eurekka-1.png"
+          src="https://site-assets.plasmic.app/1242cbfc96eb4a42b4a30be3aa07c3d9.svg"
           alt="Eurekka"
           style={styles.logo}
         />
