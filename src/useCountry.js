@@ -117,5 +117,7 @@ export const useCountry = () => {
         })
   }, [])
 
+  console.log("countryCode: ", countryCode);
+
   return {countryCode}
 }
