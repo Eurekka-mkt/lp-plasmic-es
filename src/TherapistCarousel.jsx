@@ -218,6 +218,7 @@ const styles = {
     fontFamily: 'inherit',
     display: 'block',
     overflow: 'hidden',
+    gridColumn: '1 / -1',
   },
   inner: {
     maxWidth: '1200px',
