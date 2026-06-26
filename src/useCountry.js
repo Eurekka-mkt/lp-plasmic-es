@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const countryNames = {
   AR: 'Argentina',
@@ -62,44 +62,84 @@ const countryCurrencyMap = {
   CA: 'Dólar Canadiense (CAD)',
 };
 
-export function useCountry() {
-  const [country, setCountry] = useState({ name: '', currency: '', code: '' });
+let cachedCountry = null;
+let fetchPromise = null;
 
-  useEffect(() => {
-    async function detect() {
-      try {
-        const res = await fetch('https://ipapi.co/json/');
-        if (!res.ok) throw new Error('fetch failed');
-        const data = await res.json();
-        const code = data.country_code;
-        setCountry({
-          code,
-          name: countryNames[code] || data.country_name || '',
-          currency: countryCurrencyMap[code] || data.currency || '',
-        });
-      } catch {
-        try {
-          const langs = navigator.languages || [navigator.language];
-          for (const lang of langs) {
-            const parts = lang.split('-');
-            if (parts.length > 1) {
-              const c = parts[1].toUpperCase();
-              if (countryNames[c]) {
-                setCountry({
-                  code: c,
-                  name: countryNames[c],
-                  currency: countryCurrencyMap[c] || '',
-                });
-                return;
-              }
-            }
-          }
-        } catch {
-          // silent
+function detectFromLanguage() {
+  try {
+    const langs = navigator.languages || [navigator.language];
+    for (const lang of langs) {
+      const parts = lang.split('-');
+      if (parts.length > 1) {
+        const c = parts[1].toUpperCase();
+        if (countryNames[c]) {
+          return {
+            code: c,
+            name: countryNames[c],
+            currency: countryCurrencyMap[c] || '',
+          };
         }
       }
     }
-    detect();
+  } catch {
+    // silent
+  }
+  return null;
+}
+
+function fetchCountry() {
+  if (fetchPromise) return fetchPromise;
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 4000);
+
+  fetchPromise = fetch('https://ipapi.co/json/', { signal: controller.signal })
+    .then(res => {
+      clearTimeout(timeout);
+      if (!res.ok) throw new Error('fetch failed');
+      return res.json();
+    })
+    .then(data => {
+      const code = data.country_code;
+      cachedCountry = {
+        code,
+        name: countryNames[code] || data.country_name || '',
+        currency: countryCurrencyMap[code] || data.currency || '',
+      };
+      return cachedCountry;
+    })
+    .catch(() => {
+      clearTimeout(timeout);
+      cachedCountry = detectFromLanguage() || { name: '', currency: '', code: '' };
+      return cachedCountry;
+    });
+
+  return fetchPromise;
+}
+
+// Start fetching immediately on module load
+fetchCountry();
+
+export function useCountry() {
+  const [country, setCountry] = useState(() => {
+    if (cachedCountry) return cachedCountry;
+    return detectFromLanguage() || { name: '', currency: '', code: '' };
+  });
+
+  const mounted = useRef(true);
+
+  useEffect(() => {
+    mounted.current = true;
+    if (cachedCountry) {
+      setCountry(cachedCountry);
+      return;
+    }
+    fetchCountry().then(result => {
+      if (mounted.current && result) {
+        setCountry(result);
+      }
+    });
+    return () => { mounted.current = false; };
   }, []);
 
   return country;
