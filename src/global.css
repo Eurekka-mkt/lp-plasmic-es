@@ -7,3 +7,10 @@ body,
 body {
   margin: 0;
 }
+
+@media (max-width: 768px) {
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+    text-align: center;
+  }
+}

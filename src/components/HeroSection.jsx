@@ -5,17 +5,16 @@ export default function HeroSection() {
 
   return (
     <section style={styles.section}>
-      <section className="ρd__all ρd__section ρmGcay">
-        <div className="ρebpgu __wab_img-wrapper" style={{height: "auto"}}>
-          <img alt="" aria-hidden="true" className="__wab_img-spacer-svg" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwMDAiIGhlaWdodD0iMjk4NSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4=" style={{width: "100%", height: "auto", minHeight: "100%"}}/>
-          <picture className="__wab_picture">
-            <img alt="" loading="lazy" className="__wab_img" decoding="async" src="https://site-assets.plasmic.app/1242cbfc96eb4a42b4a30be3aa07c3d9.svg" style={{width: 0, height: 0}}/>
-          </picture>
-        </div>
-      </section>
+      <div style={styles.logoBar}>
+        <img
+          src="https://s3.amazonaws.com/appforest_uf/f1676049140062x419264094154991700/logo-eurekka-1.png"
+          alt="Eurekka"
+          style={styles.logo}
+        />
+      </div>
 
-      <div style={styles.content}>
-        <div style={styles.textColumn}>
+      <div className="hero-grid" style={styles.grid}>
+        <div style={styles.textCol}>
           <h1 style={styles.title}>
             Terapia online en español, con un profesional que realmente encaje contigo
           </h1>
@@ -44,13 +43,14 @@ export default function HeroSection() {
           </div>
         </div>
 
-        <div style={styles.imageColumn}>
-          <div className="ρgfLE __wab_img-wrapper" style={{height: "auto"}}>
-            <img alt="" aria-hidden="true" className="__wab_img-spacer-svg" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQxMiIgaGVpZ2h0PSIxMTgxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIvPg==" style={{width: "100%", height: "auto", minHeight: "100%"}}/>
-            <picture className="__wab_picture">
-              <source type="image/webp" srcSet="https://img.plasmic.app/img-optimizer/v1/img?src=https%3A%2F%2Fimg.plasmic.app%2Fimg-optimizer%2Fv1%2Fimg%2F33e03afab794cfe89d77be61fd7e5d95.webp&amp;w=640&amp;q=75&amp;f=webp 1x, https://img.plasmic.app/img-optimizer/v1/img?src=https%3A%2F%2Fimg.plasmic.app%2Fimg-optimizer%2Fv1%2Fimg%2F33e03afab794cfe89d77be61fd7e5d95.webp&amp;w=1080&amp;q=75&amp;f=webp 2x"/>
-              <img alt="Terapia online Eurekka" loading="lazy" className="__wab_img" decoding="async" src="https://img.plasmic.app/img-optimizer/v1/img?src=https%3A%2F%2Fimg.plasmic.app%2Fimg-optimizer%2Fv1%2Fimg%2F33e03afab794cfe89d77be61fd7e5d95.webp&amp;w=1080&amp;q=75" srcSet="https://img.plasmic.app/img-optimizer/v1/img?src=https%3A%2F%2Fimg.plasmic.app%2Fimg-optimizer%2Fv1%2Fimg%2F33e03afab794cfe89d77be61fd7e5d95.webp&amp;w=640&amp;q=75 1x, https://img.plasmic.app/img-optimizer/v1/img?src=https%3A%2F%2Fimg.plasmic.app%2Fimg-optimizer%2Fv1%2Fimg%2F33e03afab794cfe89d77be61fd7e5d95.webp&amp;w=1080&amp;q=75 2x" style={{width: 0, height: 0}}/>
-            </picture>
+        <div style={styles.imageCol}>
+          <div style={styles.imageWrapper}>
+            <div style={styles.yellowCircle}></div>
+            <img
+              src="https://img.plasmic.app/img-optimizer/v1/img?src=https%3A%2F%2Fimg.plasmic.app%2Fimg-optimizer%2Fv1%2Fimg%2F33e03afab794cfe89d77be61fd7e5d95.webp&w=1080&q=75"
+              alt="Terapeuta Eurekka"
+              style={styles.heroImg}
+            />
           </div>
         </div>
       </div>
@@ -60,28 +60,36 @@ export default function HeroSection() {
 
 const styles = {
   section: {
-    position: 'relative',
     width: '100%',
+    background: '#ffffff',
     overflow: 'hidden',
   },
-  content: {
+  logoBar: {
     display: 'flex',
+    justifyContent: 'center',
+    padding: '32px 24px 0',
+  },
+  logo: {
+    height: '48px',
+    width: 'auto',
+  },
+  grid: {
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
     alignItems: 'center',
-    gap: '48px',
+    gap: '40px',
     maxWidth: '1200px',
     margin: '0 auto',
-    padding: '48px 24px 64px',
-    flexWrap: 'wrap',
+    padding: '48px 24px 0',
   },
-  textColumn: {
-    flex: '1 1 480px',
+  textCol: {
     display: 'flex',
     flexDirection: 'column',
     gap: '20px',
   },
   title: {
     fontFamily: '"Inter", sans-serif',
-    fontSize: 'clamp(1.5rem, 4vw, 2.25rem)',
+    fontSize: 'clamp(1.5rem, 3.5vw, 2.25rem)',
     fontWeight: 700,
     color: '#1a1a1a',
     lineHeight: 1.2,
@@ -89,7 +97,7 @@ const styles = {
   },
   subtitle: {
     fontFamily: '"Inter", sans-serif',
-    fontSize: 'clamp(0.9rem, 2.5vw, 1.05rem)',
+    fontSize: 'clamp(0.9rem, 1.8vw, 1.05rem)',
     color: '#444',
     lineHeight: 1.6,
     margin: 0,
@@ -134,8 +142,34 @@ const styles = {
   dot: {
     color: '#bbb',
   },
-  imageColumn: {
-    flex: '1 1 400px',
-    maxWidth: '520px',
+  imageCol: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+  },
+  imageWrapper: {
+    position: 'relative',
+    width: '100%',
+    maxWidth: '450px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+  },
+  yellowCircle: {
+    position: 'absolute',
+    bottom: '0',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    width: '85%',
+    aspectRatio: '1',
+    borderRadius: '50%',
+    background: '#FFCE3B',
+  },
+  heroImg: {
+    position: 'relative',
+    width: '80%',
+    height: 'auto',
+    objectFit: 'contain',
+    zIndex: 1,
   },
 };
