@@ -53,11 +53,11 @@ const countryCodeToPaymentFlags = {
 };
 
 export default function PaymentFlags() {
-  const { countryCode } = useCountry();
+  const { code } = useCountry();
 
   const paymentMethods = [
     ...commonPaymentMethods,
-    ...(countryCode && countryCodeToPaymentFlags[countryCode] ? countryCodeToPaymentFlags[countryCode] : []),
+    ...(code && countryCodeToPaymentFlags[code] ? countryCodeToPaymentFlags[code] : []),
   ];
 
   return (
