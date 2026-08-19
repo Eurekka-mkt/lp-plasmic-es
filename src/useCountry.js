@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+
 const countryCodeToPaymentFlags = {
     MX: [
       {
@@ -110,11 +112,21 @@ export const useCountry = () => {
   const [countryCode, setCountryCode] = useState()
 
   useEffect(() => {
-    const url = "https://api.ipdata.co?api-key=63d72f8354d59c5444f4e2d113115b4e3ec28ad066f32f5588cf07ac"
-        axios.get(url).then(resp => {
-            setCountryCode(resp.data.country_code)
-        })
+    fetch("https://api.ipdata.co?api-key=63d72f8354d59c5444f4e2d113115b4e3ec28ad066f32f5588cf07ac")
+      .then(resp => resp.json())
+      .then(data => setCountryCode(data.country_code))
+      .catch(() => {})
   }, [])
 
-  return {countryCode}
+  const countryNames = { MX: 'México', CO: 'Colombia', CL: 'Chile', AR: 'Argentina', PE: 'Perú', ES: 'España', BR: 'Brasil', US: 'Estados Unidos' }
+  const currencies = { MX: 'MXN', CO: 'COP', CL: 'CLP', AR: 'ARS', PE: 'PEN', ES: 'EUR', BR: 'BRL', US: 'USD' }
+  const paymentFlags = countryCode ? (countryCodeToPaymentFlags[countryCode] || []) : []
+
+  return {
+    countryCode,
+    code: countryCode,
+    currency: countryCode ? (currencies[countryCode] || null) : null,
+    name: countryCode ? (countryNames[countryCode] || null) : null,
+    paymentFlags,
+  }
 }
