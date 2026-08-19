@@ -107,8 +107,7 @@ const countryCodeToPaymentFlags = {
   }
 
 export const useCountry = () => {
-  const [countryCode, setCountryCode] =
-    useState<keyof typeof countryCodeToPaymentFlags>()
+  const [countryCode, setCountryCode] = useState()
 
   useEffect(() => {
     const url = "https://api.ipdata.co?api-key=63d72f8354d59c5444f4e2d113115b4e3ec28ad066f32f5588cf07ac"

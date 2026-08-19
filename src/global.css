@@ -1,3 +1,12 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-text: #f8f8f8;
+  --color-brand-yellow: #FFCE3B;
+  --color-brand-purple: #5f236f;
+  --color-brand-lavender: #bfa7c5;
+}
+
 html,
 body,
 #root {
