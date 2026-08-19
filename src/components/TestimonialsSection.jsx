@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Star, MapPin, Globe, ChevronDown } from 'lucide-react';
 
 const therapists = [
   {
@@ -75,46 +74,73 @@ const therapists = [
   },
 ];
 
+const PURPLE = '#5f236f';
+const YELLOW = '#FFCE3B';
+const LAVENDER = '#bfa7c5';
+
+function StarIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill={YELLOW} stroke={YELLOW} strokeWidth="2">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+    </svg>
+  );
+}
+
 function TestimonialCard({ testimonial }) {
   const [expanded, setExpanded] = useState(false);
+  const [hovered, setHovered] = useState(false);
 
   return (
-    <div className="bg-white rounded-2xl p-7 md:p-8 border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col">
-      <div className="flex gap-1 mb-5">
-        {[...Array(5)].map((_, i) => (
-          <Star key={i} size={16} className="text-brand-yellow fill-brand-yellow" />
-        ))}
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        background: '#fff',
+        borderRadius: 20,
+        padding: '32px 28px',
+        display: 'flex',
+        flexDirection: 'column',
+        border: '1px solid #f0f0f0',
+        boxShadow: hovered ? '0 12px 40px rgba(95,35,111,0.12)' : '0 2px 12px rgba(0,0,0,0.06)',
+        transition: 'box-shadow 0.3s ease, transform 0.3s ease',
+        transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
+        minHeight: 320,
+      }}
+    >
+      <div style={{ display: 'flex', gap: 3, marginBottom: 20 }}>
+        {[...Array(5)].map((_, i) => <StarIcon key={i} />)}
       </div>
 
-      <h4 className="text-lg font-bold text-gray-900 leading-snug mb-3">
+      <h4 style={{ fontSize: 18, fontWeight: 700, color: '#1a1a1a', lineHeight: 1.3, marginBottom: 12, fontFamily: 'Carlito, sans-serif' }}>
         {testimonial.title}
       </h4>
 
-      <p className="text-gray-600 leading-relaxed flex-1 mb-4 text-[15px]">
+      <p style={{ fontSize: 15, color: '#555', lineHeight: 1.6, flex: 1, marginBottom: 16, fontFamily: 'Inter, sans-serif' }}>
         &ldquo;{testimonial.shortText}&rdquo;
       </p>
 
-      <div
-        className={`grid transition-all duration-500 ease-out ${
-          expanded ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
-        }`}
-      >
-        <div className="overflow-hidden">
-          <p className="whitespace-pre-line pt-2 pb-4 border-t border-gray-100 text-gray-700 text-sm leading-relaxed">
+      {expanded && (
+        <div style={{ borderTop: '1px solid #f0f0f0', paddingTop: 16, marginBottom: 16 }}>
+          <p style={{ whiteSpace: 'pre-line', fontSize: 14, color: '#444', lineHeight: 1.7, fontFamily: 'Inter, sans-serif' }}>
             {testimonial.fullText}
           </p>
         </div>
-      </div>
+      )}
 
-      <div className="mt-auto pt-5 border-t border-gray-100 flex items-center justify-between gap-3">
-        <div className="flex items-center gap-3 min-w-0">
-          <div className="w-11 h-11 rounded-full bg-brand-purple/10 flex items-center justify-center shrink-0">
-            <span className="text-brand-purple font-bold text-sm">{testimonial.initials}</span>
+      <div style={{ marginTop: 'auto', paddingTop: 20, borderTop: '1px solid #f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0 }}>
+          <div style={{
+            width: 44, height: 44, borderRadius: '50%', background: `${PURPLE}15`,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0
+          }}>
+            <span style={{ color: PURPLE, fontWeight: 700, fontSize: 14 }}>{testimonial.initials}</span>
           </div>
-          <div className="min-w-0">
-            <p className="font-semibold text-gray-900 text-sm truncate">{testimonial.name}</p>
-            <p className="text-gray-400 text-xs flex items-center gap-1">
-              <MapPin size={12} />
+          <div style={{ minWidth: 0 }}>
+            <p style={{ fontWeight: 600, color: '#1a1a1a', fontSize: 14, margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              {testimonial.name}
+            </p>
+            <p style={{ color: '#999', fontSize: 12, margin: '2px 0 0', display: 'flex', alignItems: 'center', gap: 4 }}>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
               {testimonial.location}
             </p>
           </div>
@@ -122,13 +148,22 @@ function TestimonialCard({ testimonial }) {
 
         <button
           onClick={() => setExpanded(!expanded)}
-          className="flex items-center gap-1 text-sm font-semibold text-brand-purple hover:gap-1.5 transition-all duration-200 shrink-0 cursor-pointer"
+          style={{
+            display: 'flex', alignItems: 'center', gap: 4,
+            fontSize: 13, fontWeight: 600, color: PURPLE,
+            border: 'none', background: 'none', cursor: 'pointer',
+            padding: '6px 12px', borderRadius: 20,
+            transition: 'background 0.2s',
+            whiteSpace: 'nowrap',
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.background = `${PURPLE}10`}
+          onMouseLeave={(e) => e.currentTarget.style.background = 'none'}
         >
-          <span>{expanded ? 'Ver menos' : 'Experiencia real'}</span>
-          <ChevronDown
-            size={16}
-            className={`transition-transform duration-300 ${expanded ? 'rotate-180' : ''}`}
-          />
+          <span>{expanded ? 'Ver menos' : 'Leer más'}</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
+            style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.3s' }}>
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
         </button>
       </div>
     </div>
@@ -138,80 +173,98 @@ function TestimonialCard({ testimonial }) {
 export default function TestimonialsSection() {
   const [activeTab, setActiveTab] = useState(0);
   const activeTherapist = therapists[activeTab];
-  const cols = activeTherapist.testimonials.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2';
 
   return (
-    <section id="depoimentos" className="py-24 md:py-32 bg-gray-50 overflow-hidden">
-      <div className="max-w-5xl mx-auto px-5 sm:px-8">
+    <section id="depoimentos" style={{
+      padding: '80px 0', background: '#f7f6f4',
+      gridColumnStart: 1, gridColumnEnd: -1,
+    }}>
+      <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 24px' }}>
         {/* Header */}
-        <div className="text-center mb-12">
-          <p className="uppercase tracking-widest text-brand-purple text-sm font-semibold mb-4">
+        <div style={{ textAlign: 'center', marginBottom: 48 }}>
+          <p style={{
+            textTransform: 'uppercase', letterSpacing: 3, color: PURPLE,
+            fontSize: 13, fontWeight: 600, marginBottom: 16, fontFamily: 'Inter, sans-serif'
+          }}>
             Experiencias reales de pacientes
           </p>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-[1.15] mb-5">
+          <h2 style={{
+            fontSize: 'clamp(26px, 4vw, 42px)', fontWeight: 700, color: '#1a1a1a',
+            lineHeight: 1.15, marginBottom: 16, fontFamily: 'Carlito, sans-serif',
+            maxWidth: 700, marginLeft: 'auto', marginRight: 'auto'
+          }}>
             Lo que cambia cuando encuentras al terapeuta adecuado
           </h2>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto leading-relaxed mb-8">
+          <p style={{
+            fontSize: 17, color: '#666', lineHeight: 1.6,
+            maxWidth: 580, margin: '0 auto 32px', fontFamily: 'Inter, sans-serif'
+          }}>
             Conoce las experiencias de personas que encontraron en Eurekka un espacio seguro para hablar, comprenderse y avanzar.
           </p>
 
-          <div className="flex flex-wrap justify-center gap-3">
-            {['Atención online', 'Terapeutas seleccionados', 'Pacientes en diferentes países'].map(
-              (pill) => (
-                <span
-                  key={pill}
-                  className="inline-flex items-center gap-2 bg-white border border-brand-purple/15 rounded-full px-4 py-2 text-sm text-brand-purple font-medium"
-                >
-                  <span className="w-2 h-2 rounded-full bg-brand-yellow" />
-                  {pill}
-                </span>
-              )
-            )}
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 10 }}>
+            {['Atención online', 'Terapeutas seleccionados', 'Pacientes en diferentes países'].map((pill) => (
+              <span key={pill} style={{
+                display: 'inline-flex', alignItems: 'center', gap: 8,
+                background: '#fff', border: `1px solid ${PURPLE}22`,
+                borderRadius: 50, padding: '8px 18px', fontSize: 13,
+                color: PURPLE, fontWeight: 500, fontFamily: 'Inter, sans-serif'
+              }}>
+                <span style={{ width: 8, height: 8, borderRadius: '50%', background: YELLOW, display: 'inline-block' }} />
+                {pill}
+              </span>
+            ))}
           </div>
         </div>
 
         {/* Tabs */}
-        <div className="flex justify-center gap-2 sm:gap-3 mb-10">
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 10, marginBottom: 40 }}>
           {therapists.map((t, i) => (
             <button
               key={t.tabName}
               onClick={() => setActiveTab(i)}
-              className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 cursor-pointer ${
-                activeTab === i
-                  ? 'bg-brand-purple text-white shadow-lg scale-105'
-                  : 'bg-white text-brand-purple border border-brand-purple/20 hover:bg-brand-purple/5'
-              }`}
+              style={{
+                padding: '10px 24px', borderRadius: 50,
+                fontSize: 14, fontWeight: 600, cursor: 'pointer',
+                border: activeTab === i ? 'none' : `2px solid ${PURPLE}33`,
+                background: activeTab === i ? PURPLE : '#fff',
+                color: activeTab === i ? '#fff' : PURPLE,
+                boxShadow: activeTab === i ? `0 4px 16px ${PURPLE}40` : 'none',
+                transform: activeTab === i ? 'scale(1.05)' : 'scale(1)',
+                transition: 'all 0.3s ease',
+                fontFamily: 'Inter, sans-serif',
+              }}
             >
               {t.tabName}
             </button>
           ))}
         </div>
 
-        {/* Cards grid */}
-        {activeTherapist.testimonials.length > 0 ? (
-          <div className={`grid grid-cols-1 ${cols} gap-6`}>
-            {activeTherapist.testimonials.map((testimonial, i) => (
-              <TestimonialCard key={`${activeTab}-${i}`} testimonial={testimonial} />
-            ))}
-          </div>
-        ) : (
-          <p className="text-center text-gray-400 text-lg py-16">
-            Próximamente más experiencias.
-          </p>
-        )}
+        {/* Cards */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: `repeat(${Math.min(activeTherapist.testimonials.length, 3)}, 1fr)`,
+          gap: 24,
+        }}>
+          {activeTherapist.testimonials.map((testimonial, i) => (
+            <TestimonialCard key={`${activeTab}-${i}`} testimonial={testimonial} />
+          ))}
+        </div>
 
-        {/* Countries strip */}
-        <div className="mt-14 text-center">
-          <p className="text-lg text-gray-700 font-medium mb-5">
+        {/* Countries */}
+        <div style={{ textAlign: 'center', marginTop: 56 }}>
+          <p style={{ fontSize: 17, color: '#444', fontWeight: 500, marginBottom: 20, fontFamily: 'Inter, sans-serif' }}>
             Personas dentro y fuera de México ya realizan su terapia online con Eurekka.
           </p>
-          <div className="flex flex-wrap justify-center gap-3">
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 10 }}>
             {['México', 'España', 'Chile'].map((country) => (
-              <span
-                key={country}
-                className="inline-flex items-center gap-2 bg-brand-purple/5 border border-brand-purple/10 rounded-full px-4 py-2 text-sm text-brand-purple font-semibold"
-              >
-                <Globe size={14} />
+              <span key={country} style={{
+                display: 'inline-flex', alignItems: 'center', gap: 6,
+                background: `${PURPLE}0A`, border: `1px solid ${PURPLE}18`,
+                borderRadius: 50, padding: '8px 18px',
+                fontSize: 13, color: PURPLE, fontWeight: 600, fontFamily: 'Inter, sans-serif'
+              }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                 {country}
               </span>
             ))}
@@ -219,28 +272,49 @@ export default function TestimonialsSection() {
         </div>
 
         {/* CTA */}
-        <div className="mt-16 bg-gradient-to-br from-brand-purple to-brand-purple/85 rounded-3xl p-8 md:p-12 text-center shadow-lg">
-          <h3 className="text-2xl md:text-3xl font-bold text-brand-text leading-tight mb-4">
+        <div style={{
+          marginTop: 64, background: `linear-gradient(135deg, ${PURPLE}, ${PURPLE}dd)`,
+          borderRadius: 24, padding: '48px 32px', textAlign: 'center',
+          boxShadow: `0 16px 48px ${PURPLE}30`,
+        }}>
+          <h3 style={{ fontSize: 'clamp(22px, 3vw, 30px)', fontWeight: 700, color: '#f8f8f8', lineHeight: 1.3, marginBottom: 16, fontFamily: 'Carlito, sans-serif' }}>
             Tu historia también puede empezar con una primera conversación
           </h3>
-          <p className="text-brand-lavender text-lg max-w-xl mx-auto mb-8 leading-relaxed">
+          <p style={{ fontSize: 17, color: LAVENDER, maxWidth: 520, margin: '0 auto 32px', lineHeight: 1.6, fontFamily: 'Inter, sans-serif' }}>
             No necesitas tener todo claro para comenzar. Solo necesitas encontrar un profesional con quien puedas sentirte seguro, escuchado y comprendido.
           </p>
           <a
-            href="#valores"
+            href="#prices"
             onClick={(e) => {
               e.preventDefault();
-              document.getElementById('valores')?.scrollIntoView({ behavior: 'smooth' });
+              document.getElementById('prices')?.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="inline-block bg-brand-yellow text-gray-900 font-bold px-10 py-4 rounded-full text-lg shadow-[0_4px_20px_rgba(255,206,59,0.4)] hover:bg-yellow-300 hover:scale-[1.03] active:scale-[0.98] transition-all duration-300"
+            style={{
+              display: 'inline-block', background: YELLOW, color: '#1a1a1a',
+              fontWeight: 700, padding: '16px 40px', borderRadius: 50,
+              fontSize: 17, textDecoration: 'none',
+              boxShadow: `0 4px 20px ${YELLOW}66`,
+              transition: 'transform 0.2s, box-shadow 0.2s',
+              fontFamily: 'Montserrat, Inter, sans-serif',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.04)'; e.currentTarget.style.boxShadow = `0 6px 28px ${YELLOW}88`; }}
+            onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = `0 4px 20px ${YELLOW}66`; }}
           >
             Encontrar a mi terapeuta
           </a>
-          <p className="text-brand-lavender/70 text-sm mt-5">
+          <p style={{ color: `${LAVENDER}99`, fontSize: 13, marginTop: 20, fontFamily: 'Inter, sans-serif' }}>
             Atención online, estés donde estés.
           </p>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          #depoimentos [style*="grid-template-columns"] {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }
