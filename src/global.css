@@ -9,6 +9,10 @@ body {
   background: #f0f0f0;
 }
 
+#depoimentos {
+  grid-column: 1 / -1 !important;
+}
+
 @media (max-width: 768px) {
   .hero-grid {
     grid-template-columns: 1fr !important;
