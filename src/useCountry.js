@@ -1,11 +1,5 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-
 const countryCodeToPaymentFlags = {
-  MX: {
-    currency: 'Mexican Peso',
-    currencyCode: 'MXN',
-    paymentMethods: [
+    MX: [
       {
         name: 'OXXO',
         src: 'https://upload.wikimedia.org/wikipedia/en/thumb/4/40/OXXO_logo.svg/1280px-OXXO_logo.svg.png',
@@ -22,12 +16,8 @@ const countryCodeToPaymentFlags = {
         bg: 'bg-white',
       },
     ],
-  },
 
-  CO: {
-    currency: 'Colombian Peso',
-    currencyCode: 'COP',
-    paymentMethods: [
+    CO: [
       {
         name: 'Efecty',
         src: 'https://logovtor.com/wp-content/uploads/2023/05/efecty-logo-vector-2023.png',
@@ -54,12 +44,8 @@ const countryCodeToPaymentFlags = {
         bg: 'bg-white',
       },
     ],
-  },
 
-  AR: {
-    currency: 'Argentine Peso',
-    currencyCode: 'ARS',
-    paymentMethods: [
+    AR: [
       {
         name: 'Mercado Pago',
         src: 'https://cdn.simpleicons.org/mercadopago',
@@ -71,12 +57,8 @@ const countryCodeToPaymentFlags = {
         bg: 'bg-white',
       },
     ],
-  },
 
-  PE: {
-    currency: 'Peruvian Sol',
-    currencyCode: 'PEN',
-    paymentMethods: [
+    PE: [
       {
         name: 'Yape',
         src: 'https://upload.wikimedia.org/wikipedia/commons/7/76/Yape_peru_logotype.svg',
@@ -93,12 +75,8 @@ const countryCodeToPaymentFlags = {
         bg: 'bg-white',
       },
     ],
-  },
 
-  CL: {
-    currency: 'Chilean Peso',
-    currencyCode: 'CLP',
-    paymentMethods: [
+    CL: [
       {
         name: 'Sencillito',
         src: 'https://upload.wikimedia.org/wikipedia/commons/5/59/Sencillito_logo.svg',
@@ -110,51 +88,34 @@ const countryCodeToPaymentFlags = {
         bg: 'bg-white',
       },
     ],
-  },
 
-  UY: {
-    currency: 'Uruguayan Peso',
-    currencyCode: 'UYU',
-    paymentMethods: [
+    UY: [
       {
         name: 'PayPal',
         src: 'https://cdn.simpleicons.org/paypal',
         bg: 'bg-white',
       },
     ],
-  },
 
-  BR: {
-    currency: 'Brazilian Real',
-    currencyCode: 'BRL',
-    paymentMethods: [
+    BR: [
       {
-        name: 'PIX',
-        src: 'https://images.seeklogo.com/logo-png/38/1/pix-banco-central-logo-png_seeklogo-388843.png',
-        bg: 'bg-white',
-      },
-    ],
-  },
-};
+        name: "PIX",
+        src: "https://images.seeklogo.com/logo-png/38/1/pix-banco-central-logo-png_seeklogo-388843.png",
+        bg: "bg-white"
+      }
+    ]
+  }
 
 export const useCountry = () => {
-  const [countryCode, setCountryCode] = useState();
-  const [currency, setCurrency] = useState();
-  const [name, setName] = useState();
+  const [countryCode, setCountryCode] =
+    useState<keyof typeof countryCodeToPaymentFlags>()
 
   useEffect(() => {
-    const url = "https://api.ipdata.co?api-key=63d72f8354d59c5444f4e2d113115b4e3ec28ad066f32f5588cf07ac";
+    const url = "https://api.ipdata.co?api-key=63d72f8354d59c5444f4e2d113115b4e3ec28ad066f32f5588cf07ac"
+        axios.get(url).then(resp => {
+            setCountryCode(resp.data.country_code)
+        })
+  }, [])
 
-    axios.get(url).then((resp) => {
-      const cc = resp.data.country_code as string | undefined;
-      const countryName = resp.data.country_name as string | undefined;
-      const paymentInfo = cc ? countryCodeToPaymentFlags[cc] : undefined;
-
-      setCountryCode(cc);
-      setName(countryName);
-      setCurrency(paymentInfo?.currency);
-    });
-  }, []);
-
-  return { countryCode, currency, name };
-};
+  return {countryCode}
+}
