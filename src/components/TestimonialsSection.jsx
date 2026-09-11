@@ -1,76 +1,61 @@
 import React, { useState } from 'react';
 
-const therapists = [
+const testimonials = [
   {
-    tabName: 'Oscar',
-    testimonials: [
-      {
-        title: 'Confianza desde el minuto cero',
-        shortText: 'Te hace entrar en confianza desde el minuto cero y te permite expresar todo lo que te preocupa.',
-        fullText: 'Creo que no he encontrado mejor psicólogo que Oscar, de Eurekka. Es una persona que te hace entrar en confianza desde el minuto cero. Tiene una manera de abordar los problemas sumamente apropiada: te deja hablar, expresarte y comunicar qué es lo que te preocupa. Después, con unas pocas palabras, te ayuda a replantear toda la carga negativa.\n\nEs un profesional sumamente implicado y responsable. Hace de la terapia un momento de total confianza, en el que puedes hablar abiertamente. Sus sesiones me han ayudado a resolver mis problemas.\n\nEstoy realizando la terapia desde España y Oscar ha sabido adaptarse al horario sin inconveniente alguno.',
-        initials: 'JM',
-        name: 'John Morales',
-        location: 'España',
-      },
-      {
-        title: 'Me siento comprendida y segura',
-        shortText: 'Me asombra cada sesión. Me siento comprendida, segura y sé que me guía de la mejor manera.',
-        fullText: 'Oscar es un profesional de la salud capacitado para afrontar diferentes dilemas. Soy su paciente y me asombra cada sesión; siempre espero con ansias la próxima cita. Me siento comprendida, segura y sé que me guía de la mejor manera.\n\nEs un profesional que se construye todos los días para darles lo mejor a sus pacientes. Tomo la terapia desde el estado de Tlaxcala, México, y me siento agradecida con Eurekka por tener terapeutas capacitados como el psicólogo Oscar.',
-        initials: 'AO',
-        name: 'Adriana Ojeda',
-        location: 'Tlaxcala, México',
-      },
-      {
-        title: 'Desde la primera sesión sentí el cambio',
-        shortText: 'Buscar ayuda psicológica fue la mejor decisión para mi vida y encontrar a Oscar en este camino ha sido mi salvación.',
-        fullText: 'Mi experiencia con Oscar ha sido excelente. Se nota su profesionalismo y, desde la primera sesión, siento el cambio. Buscar ayuda psicológica fue la mejor decisión para mi vida y encontrar a Oscar en este camino ha sido mi salvación.\n\nGracias, Oscar. Todavía continúo en terapia y lo recomiendo al 100%. Si necesitas ayuda profesional, no dudes en contactar con Eurekka.',
-        initials: 'MC',
-        name: 'Maricarmen Carrasquero',
-        location: 'Chile',
-      },
-    ],
+    title: 'Confianza desde el minuto cero',
+    shortText: 'Te hace entrar en confianza desde el minuto cero y te permite expresar todo lo que te preocupa.',
+    fullText: 'Creo que no he encontrado mejor psicólogo en Eurekka. Es una persona que te hace entrar en confianza desde el minuto cero. Tiene una manera de abordar los problemas sumamente apropiada: te deja hablar, expresarte y comunicar qué es lo que te preocupa. Después, con unas pocas palabras, te ayuda a replantear toda la carga negativa.\n\nEs un profesional sumamente implicado y responsable. Hace de la terapia un momento de total confianza, en el que puedes hablar abiertamente. Sus sesiones me han ayudado a resolver mis problemas.\n\nEstoy realizando la terapia desde España y mi terapeuta ha sabido adaptarse al horario sin inconveniente alguno.',
+    initials: 'JM',
+    name: 'John Morales',
+    location: 'España',
   },
   {
-    tabName: 'Alejandra',
-    testimonials: [
-      {
-        title: 'Puedo expresarme sin sentirme juzgada',
-        shortText: 'Ale me brinda la seguridad para expresar mis sentimientos y cuestionarme muchas cosas sin sentirme juzgada.',
-        fullText: 'La experiencia con Alejandra ha sido muy gratificante y de mucha confianza. Es mi tercera vez llevando un proceso como este y Ale me brinda la seguridad para expresar mis sentimientos y cuestionarme muchas cosas sin sentirme juzgada o mal.\n\nHan sido sesiones de mucha comprensión y de preguntas difíciles de responder, pero el acompañamiento de Ale ha sido un gran pilar.\n\nMe gusta que, al final de cada sesión, me pregunte cómo me sentí y cómo recibí lo que hablamos y aprendimos. También me ofrece puntos de vista que muchas veces no tomo en cuenta, siempre desde una posición neutral y validando mis sentimientos y opiniones. Por el momento, estoy muy contenta con la atención recibida.',
-        initials: 'Pd',
-        name: 'Paciente de Eurekka',
-        location: 'Terapia individual',
-      },
-      {
-        title: 'Ahora entendemos mejor cómo funcionamos',
-        shortText: 'No solo nos ha servido como pareja, sino también a nivel personal. Ahora contamos con más herramientas para afrontar los conflictos.',
-        fullText: 'Mi chico y yo comenzamos terapia de pareja y estamos muy contentos con la experiencia. El terapeuta sabe exactamente qué preguntas hacer para invitarte a reflexionar, no solo sobre cómo resolver los problemas del presente, sino también sobre su origen.\n\nNos ha ayudado a identificar cómo nuestras experiencias de la infancia y la adolescencia influyen en la forma en la que actuamos hoy, muchas veces sin ser conscientes de ello.\n\nLo que más valoramos es que no solo nos ha servido como pareja, sino también a nivel personal. He podido entenderme mejor y eso ha sido muy enriquecedor. Ahora sentimos que contamos con muchas más herramientas para afrontar posibles conflictos o situaciones difíciles, porque entendemos mejor cómo funcionamos y buscamos soluciones que nos favorezcan a ambos.',
-        initials: 'Pd',
-        name: 'Paciente de Eurekka',
-        location: 'Terapia de pareja',
-      },
-    ],
+    title: 'Me siento comprendida y segura',
+    shortText: 'Me asombra cada sesión. Me siento comprendida, segura y sé que me guía de la mejor manera.',
+    fullText: 'Mi terapeuta es un profesional de la salud capacitado para afrontar diferentes dilemas. Soy su paciente y me asombra cada sesión; siempre espero con ansias la próxima cita. Me siento comprendida, segura y sé que me guía de la mejor manera.\n\nEs un profesional que se construye todos los días para darles lo mejor a sus pacientes. Tomo la terapia desde el estado de Tlaxcala, México, y me siento agradecida con Eurekka por tener terapeutas tan capacitados.',
+    initials: 'AO',
+    name: 'Adriana Ojeda',
+    location: 'Tlaxcala, México',
   },
   {
-    tabName: 'Irma',
-    testimonials: [
-      {
-        title: 'Una conexión que no había encontrado antes',
-        shortText: 'En otras terapias todo era más mecánico. Contigo siento empatía, conexión y que realmente tratas de entenderme.',
-        fullText: 'Creo que tiene mucho que ver con la terapeuta. Me gusta que seas empática y que trates de entenderme. En otras terapias que había tomado, todo era más mecánico. No había una conexión, no la sentía y terminaba dejando de ir.\n\nAprecio que estés disponible por WhatsApp y que siempre me contestes. Eso para mí es fundamental. Con mis terapeutas anteriores, a veces no podía contactarlas.',
-        initials: 'Pd',
-        name: 'Paciente de Eurekka',
-        location: 'Experiencia verificada',
-      },
-      {
-        title: 'Un avance significativo en poco tiempo',
-        shortText: 'He tenido un avance significativo y he podido trabajar cosas que no había logrado mejorar con mi terapeuta anterior.',
-        fullText: 'Siento que he tenido un avance significativo en poco tiempo. Me has ayudado a acomodar cosas que tenía desde antes y que no había podido mejorar con mi terapeuta anterior. He sentido ese cambio en un periodo corto. Muchas gracias.',
-        initials: 'Pd',
-        name: 'Paciente de Eurekka',
-        location: 'Experiencia verificada',
-      },
-    ],
+    title: 'Desde la primera sesión sentí el cambio',
+    shortText: 'Buscar ayuda psicológica fue la mejor decisión para mi vida y encontrar Eurekka en este camino ha sido mi salvación.',
+    fullText: 'Mi experiencia ha sido excelente. Se nota el profesionalismo y, desde la primera sesión, siento el cambio. Buscar ayuda psicológica fue la mejor decisión para mi vida y encontrar Eurekka en este camino ha sido mi salvación.\n\nTodavía continúo en terapia y lo recomiendo al 100%. Si necesitas ayuda profesional, no dudes en contactar con Eurekka.',
+    initials: 'MC',
+    name: 'Maricarmen Carrasquero',
+    location: 'Chile',
+  },
+  {
+    title: 'Puedo expresarme sin sentirme juzgada',
+    shortText: 'Me brinda la seguridad para expresar mis sentimientos y cuestionarme muchas cosas sin sentirme juzgada.',
+    fullText: 'La experiencia con mi terapeuta ha sido muy gratificante y de mucha confianza. Es mi tercera vez llevando un proceso como este y me brinda la seguridad para expresar mis sentimientos y cuestionarme muchas cosas sin sentirme juzgada o mal.\n\nHan sido sesiones de mucha comprensión y de preguntas difíciles de responder, pero el acompañamiento ha sido un gran pilar.\n\nMe gusta que, al final de cada sesión, me pregunte cómo me sentí y cómo recibí lo que hablamos y aprendimos. También me ofrece puntos de vista que muchas veces no tomo en cuenta, siempre desde una posición neutral y validando mis sentimientos y opiniones. Por el momento, estoy muy contenta con la atención recibida.',
+    initials: 'Pd',
+    name: 'Paciente de Eurekka',
+    location: 'Terapia individual',
+  },
+  {
+    title: 'Ahora entendemos mejor cómo funcionamos',
+    shortText: 'No solo nos ha servido como pareja, sino también a nivel personal. Ahora contamos con más herramientas para afrontar los conflictos.',
+    fullText: 'Mi chico y yo comenzamos terapia de pareja y estamos muy contentos con la experiencia. El terapeuta sabe exactamente qué preguntas hacer para invitarte a reflexionar, no solo sobre cómo resolver los problemas del presente, sino también sobre su origen.\n\nNos ha ayudado a identificar cómo nuestras experiencias de la infancia y la adolescencia influyen en la forma en la que actuamos hoy, muchas veces sin ser conscientes de ello.\n\nLo que más valoramos es que no solo nos ha servido como pareja, sino también a nivel personal. He podido entenderme mejor y eso ha sido muy enriquecedor. Ahora sentimos que contamos con muchas más herramientas para afrontar posibles conflictos o situaciones difíciles, porque entendemos mejor cómo funcionamos y buscamos soluciones que nos favorezcan a ambos.',
+    initials: 'Pd',
+    name: 'Paciente de Eurekka',
+    location: 'Terapia de pareja',
+  },
+  {
+    title: 'Una conexión que no había encontrado antes',
+    shortText: 'En otras terapias todo era más mecánico. Aquí siento empatía, conexión y que realmente tratan de entenderme.',
+    fullText: 'Creo que tiene mucho que ver con el terapeuta. Me gusta la empatía y que tratan de entenderme. En otras terapias que había tomado, todo era más mecánico. No había una conexión, no la sentía y terminaba dejando de ir.\n\nAprecio la disponibilidad por WhatsApp y que siempre me contesten. Eso para mí es fundamental. Con mis terapeutas anteriores, a veces no podía contactarlos.',
+    initials: 'Pd',
+    name: 'Paciente de Eurekka',
+    location: 'Experiencia verificada',
+  },
+  {
+    title: 'Un avance significativo en poco tiempo',
+    shortText: 'He tenido un avance significativo y he podido trabajar cosas que no había logrado mejorar con mi terapeuta anterior.',
+    fullText: 'Siento que he tenido un avance significativo en poco tiempo. Mi terapeuta me ha ayudado a acomodar cosas que tenía desde antes y que no había podido mejorar anteriormente. He sentido ese cambio en un periodo corto. Muchas gracias.',
+    initials: 'Pd',
+    name: 'Paciente de Eurekka',
+    location: 'Experiencia verificada',
   },
 ];
 
@@ -171,16 +156,12 @@ function TestimonialCard({ testimonial }) {
 }
 
 export default function TestimonialsSection() {
-  const [activeTab, setActiveTab] = useState(0);
-  const activeTherapist = therapists[activeTab];
-
   return (
     <section id="depoimentos" style={{
       padding: '80px 0', background: '#f7f6f4',
       gridColumnStart: 1, gridColumnEnd: -1,
     }}>
       <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 24px' }}>
-        {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: 48 }}>
           <p style={{
             textTransform: 'uppercase', letterSpacing: 3, color: PURPLE,
@@ -217,61 +198,16 @@ export default function TestimonialsSection() {
           </div>
         </div>
 
-        {/* Tabs */}
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 10, marginBottom: 40 }}>
-          {therapists.map((t, i) => (
-            <button
-              key={t.tabName}
-              onClick={() => setActiveTab(i)}
-              style={{
-                padding: '10px 24px', borderRadius: 50,
-                fontSize: 14, fontWeight: 600, cursor: 'pointer',
-                border: activeTab === i ? 'none' : `2px solid ${PURPLE}33`,
-                background: activeTab === i ? PURPLE : '#fff',
-                color: activeTab === i ? '#fff' : PURPLE,
-                boxShadow: activeTab === i ? `0 4px 16px ${PURPLE}40` : 'none',
-                transform: activeTab === i ? 'scale(1.05)' : 'scale(1)',
-                transition: 'all 0.3s ease',
-                fontFamily: 'Inter, sans-serif',
-              }}
-            >
-              {t.tabName}
-            </button>
-          ))}
-        </div>
-
-        {/* Cards */}
-        <div style={{
+        <div className="testimonials-grid" style={{
           display: 'grid',
-          gridTemplateColumns: `repeat(${Math.min(activeTherapist.testimonials.length, 3)}, 1fr)`,
+          gridTemplateColumns: 'repeat(3, 1fr)',
           gap: 24,
         }}>
-          {activeTherapist.testimonials.map((testimonial, i) => (
-            <TestimonialCard key={`${activeTab}-${i}`} testimonial={testimonial} />
+          {testimonials.map((testimonial, i) => (
+            <TestimonialCard key={i} testimonial={testimonial} />
           ))}
         </div>
 
-        {/* Countries */}
-        <div style={{ textAlign: 'center', marginTop: 56 }}>
-          <p style={{ fontSize: 17, color: '#444', fontWeight: 500, marginBottom: 20, fontFamily: 'Inter, sans-serif' }}>
-            Personas dentro y fuera de México ya realizan su terapia online con Eurekka.
-          </p>
-          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 10 }}>
-            {['México', 'España', 'Chile'].map((country) => (
-              <span key={country} style={{
-                display: 'inline-flex', alignItems: 'center', gap: 6,
-                background: `${PURPLE}0A`, border: `1px solid ${PURPLE}18`,
-                borderRadius: 50, padding: '8px 18px',
-                fontSize: 13, color: PURPLE, fontWeight: 600, fontFamily: 'Inter, sans-serif'
-              }}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                {country}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* CTA */}
         <div style={{
           marginTop: 64, background: `linear-gradient(135deg, ${PURPLE}, ${PURPLE}dd)`,
           borderRadius: 24, padding: '48px 32px', textAlign: 'center',
@@ -310,7 +246,7 @@ export default function TestimonialsSection() {
 
       <style>{`
         @media (max-width: 768px) {
-          #depoimentos [style*="grid-template-columns"] {
+          .testimonials-grid {
             grid-template-columns: 1fr !important;
           }
         }
