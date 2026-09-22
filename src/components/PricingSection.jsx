@@ -26,7 +26,7 @@ export default function PricingSection() {
           {plans.map((plan) => (
             <a
               key={plan.value}
-              href={`https://ci-terapia-es.eurekka.me/#/es/appointment?value=${plan.value}&source=padrao+undefined+undefined+undefined+undefined`}
+              href={`https://lps.eurekka.me/es-appointment?&value=${plan.value}&source=padrao+undefined+undefined+undefined+undefined`}
               style={styles.card}
             >
               <div style={styles.cardContent}>
